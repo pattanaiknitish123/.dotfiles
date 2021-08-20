@@ -1,0 +1,121 @@
+#+TITLE: Windows Dotfiles | Related and Focused toward windows 10
+#+AUTHOR: Nitish Kumar Pattanaik
+#+DESCRIPTION: things to to with windows 10 after installing a fresh one.
+
+THINGS TO DO
+============
+* Wallpaper
+  Change the default wallpaper to Kali wallpaper
+  Lock screen and home screen wallpaper should be different
+  but should be KALI
+
+* Taskbar
+  - Shift taskbar to above or, make it to center
+  - Taskbar color -black
+  - Taskbar icons -small
+  - No cortana and big search in the taskbar
+  - Make taskbar simple and minimal
+
+* Theme and personalization
+** Theme
+   Windows with Dark 
+** Accent color
+   Arch black color= #363A4A
+   Set accent color to title bar and window borders (not everywhere)
+** Transparency
+   NO
+** LockScreen
+   Make you lock screen clean and simple
+** icons
+   No problem with windows desktop icons(default)
+** HOME SCREEN
+   Hide all the software links from the desktop
+   Desktop should be clean
+   make your homescreen gorgeous with the wallpaper and other things
+** Round Corner in the windows
+   Actually, I don't like this..
+p   I want to off this feature..
+   ASAP..I want corner sharp look
+** Fonts
+   Default MS font is more than enough
+*** Download Other fonts
+    Hack
+    Fira code
+    Source code pro
+** Strt Panel
+   -> show more tiles
+   -> Don't use start full screen
+   -> use all the features
+
+
+* Developer Mode
+  On developer mode and on all the developer features
+
+* Don't sync any kind of data to microsoft
+
+* Cut down OneDrive from the system
+  one drive makes window startup process longer
+  uninstall onedrive and related services
+
+* Microsoft Office
+** Use free version
+** Don't use official paid version
+** Use LibreOffice instead
+   Libreoffice is great replacement for the microsoft office
+
+* Make VLC your default video  player
+
+* Turn on all the hidden features of the operating system
+  Turn on all hidden tools
+
+* PowerToys
+  Install powertoys to get additional functionalities
+
+* Change CapsLock with Ctrl Key { using powertoy}
+  
+* Learn all the key combinations
+** Run Prompt
+** Window close
+** File explorer commands
+** Web browser Commands
+
+
+* turn off the windows bell sound -Through regedit
+
+* Make Night Light On always
+
+* Install winget
+  Through github
+* Install windows terminal
+  Through winget
+* Install WSL kali linux
+  Through Microsoft store
+* Install Firefox developer edition web browser
+  Make it your default browser
+
+* Installl PowerShell Latest edition
+  Through winget
+* Install .Net framework
+  Through winget
+* Install VS Code
+  through winget
+* Install Emacs
+  Make your own emacs configuration and pushed it to your github or gitlab repo
+
+* Install Alacritty
+  through winget
+  Make your own alacritty config and pushed it to your git repo
+
+* Install Python and java environment
+
+* Install Git on you system
+  latest version of the git
+
+* Install Dracula theme in all the applications
+
+* Install mySQL
+  Install it from the website
+
+
+* Install OBS Studio
+
