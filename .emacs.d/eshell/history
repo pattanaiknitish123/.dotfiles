@@ -1,0 +1,73 @@
+ls
+dir
+ls
+ls -alh
+pwd
+cd ~
+ls
+ls -alh
+pwd
+cd c:/Users/Patta/Desktop/java_practice/code/conceptex
+ls
+ls -alh
+javac SecondHello.java
+ls
+java SecondHello
+clear
+ls
+clear
+ls
+ls
+ls
+sls
+ls
+ls
+sls
+clear
+cp --help
+pwd
+ls
+clear
+pwd
+clear
+ls
+ls -alh
+cd /
+ls
+cd "Program Files"
+ls
+cd ~/.emacs.d/
+ls
+clear
+exit
+ls
+clear
+ls
+ls -alh
+ls -?
+ls --help
+pwd
+ls
+python --version
+pip --version
+pwd
+git clone https://github.com/pattanaiknitish123/test_repo.git
+ls
+cd test_repo
+ls
+ls -alh
+cd ./.git
+ls
+cat config
+cd ..
+git status
+git --help
+git pull
+ls
+git status
+git add -u file1.txt
+git status
+git commit -m "just adding new stuff"
+git status
+git push
+git status
