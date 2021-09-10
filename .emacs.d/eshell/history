@@ -1,73 +1,130 @@
-ls
 dir
-ls
 ls -alh
 pwd
 cd ~
-ls
 ls -alh
 pwd
 cd c:/Users/Patta/Desktop/java_practice/code/conceptex
-ls
 ls -alh
 javac SecondHello.java
-ls
 java SecondHello
 clear
-ls
 clear
-ls
-ls
-ls
 sls
-ls
-ls
 sls
 clear
 cp --help
 pwd
-ls
 clear
 pwd
 clear
-ls
 ls -alh
 cd /
-ls
 cd "Program Files"
-ls
 cd ~/.emacs.d/
-ls
 clear
-exit
-ls
 clear
-ls
 ls -alh
 ls -?
 ls --help
 pwd
-ls
 python --version
 pip --version
 pwd
 git clone https://github.com/pattanaiknitish123/test_repo.git
-ls
 cd test_repo
-ls
 ls -alh
 cd ./.git
-ls
 cat config
 cd ..
-git status
 git --help
 git pull
-ls
-git status
 git add -u file1.txt
-git status
 git commit -m "just adding new stuff"
 git status
-git push
+ls -alh
+git add LICENSE
+git commit -m "adding a license file"
 git status
+git status
+git add README.org
+git commit -m "readme file written in org-mode"
+ls -alh
+git status
+git pull
+ls -alh
+cd Powershell
+clear
+exit
+pwd
+mkdir wallpapers
+rm -rf wallpapers
+ls -alh
+git clone https://github.com/pattanaiknitish123/wallpapers.git
+cd wallpapers
+cd Code
+cd wallpapers
+cd Wallpapers-fav
+cd ..
+rm -rf Wallpapers-fav
+ls -alh
+cd Wallpapers-fav
+git status
+git add Wallpapers-fav
+cd ..
+git add Wallpapers-fav
+git status
+git commit -m "adding favorite images"
+git status
+git push
+pwd
+cd ~
+pwd
+cd .emacs.d
+cd eshell
+cd ..
+ls -alh
+cd elpa
+cd ..
+cd auto-save-list
+ls -alh
+cd ..
+cd tutorial
+./English.tut
+cat English.tut
+cat English.tut | less
+df
+fd
+cd ~
+ls -alh
+cd VMware
+cat preferences.ini
+cls
+clear
+claer
+clear
+pwd
+sls
+slslsdfds
+fsd
+fsdfsd
+fsd
+f
+sdf
+sd
+fsd
+sdf
+sd
+fd
+fsdf
+sd
+fsd
+rd
+d
+dd
+f
+sdfsdf
+fdf
+dfdf
+pwd
+ls

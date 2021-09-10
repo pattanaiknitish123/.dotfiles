@@ -1,0 +1,2 @@
+alias f fsd $*
+alias fsd f $*

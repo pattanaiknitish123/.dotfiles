@@ -71,12 +71,21 @@
  :ensure t)
 
 (use-package projectile
-:ensure t
-:init
-(projectile-mode +1)
-:bind (:map projectile-mode-map
-            ("s-p" . projectile-command-map)
-            ("C-c p" . projectile-command-map)))
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (projectile-mode +1)
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/Projects/Code")
+    (defvar projectile-project-search-path '("~/Projects/Code")))
+  (defvar projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :after projectile
+  :config (counsel-projectile-mode))
 
 (use-package dashboard
        :ensure t
@@ -215,6 +224,63 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+(use-package dired
+     :ensure nil
+     :commands (dired dired-jump)
+     :bind (("C-x C-j" . dired-jump))
+     :custom
+     (setq dired-listing-switches "-agho --group-directories-first")
+   (global-set-key 'normal 'diredmode-map
+     "h" 'dired-single-up-directory
+     "H" 'dired-omit-mode
+     "l" 'dired-single-buffer
+     "y" 'dired-ranger-copy
+     "X" 'dired-ranger-move
+     "p" 'dired-ranger-paste)
+   ;;  :config
+    ;; (evil-collection-define-key 'normal 'dired-mode-map
+     ;;  "h" 'dired-single-up-directory
+      ;; "l" 'dired-single-buffer))
+   )
+   (use-package dired-single
+     :commands (dired dired-jump))
+
+   (use-package all-the-icons-dired
+     :hook (dired-mode . all-the-icons-dired-mode))
+(use-package dired-rainbow
+    :defer 2
+    :config
+  ;;  (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+    (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+    (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+    (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+    (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+    (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+    (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+    (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+    (dired-rainbow-define log "#c17d11" ("log"))
+    (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+    (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+    (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+    (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+    (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+    (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+    (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+    (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+    (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+    (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
+
+
+(use-package dired-single
+  :defer t)
+
+(use-package dired-ranger
+  :defer t)
+
+(use-package dired-collapse
+  :defer t)
+
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -285,6 +351,34 @@
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
+
+(use-package lsp-java
+:config
+(add-hook 'java-mode-hook 'lsp)
+(setq
+     lsp-java-server-install-dir "~/.emacs.d/java_lsp/"
+     lsp-java-workspace-dir "~/Projects/Code/"
+     lsp-java-java-path "C:/Program Files/Java/jdk-16.0.1/bin/java.exe"))
+
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+(use-package rainbow-delimiters
+ :hook (prog-mode . rainbow-delimiters-mode))
+
+;;  (use-package magit			
+;;  :ensure t
+ ;;   :commands magit-status
+  ;;  :custom
+   ;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+  ;; NOTE: Make sure to configure a GitHub token before using this package!
+  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+;;  (use-package forge
+ ;;   :after magit)
 
 ;;Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))

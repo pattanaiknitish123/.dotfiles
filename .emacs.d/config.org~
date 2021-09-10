@@ -138,16 +138,28 @@ But in linux, it is so easy. You don't need to manually install fonts. It instal
     This part is very much essential. Don't just write use-package projectile. This doesn't work. Just copy this snippet from the official projectile website. Don't mess with it. Otherwise you can't access projectile.
 
     [[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various language. Many packages integrate with Projectile so it's a good ideas to have it installed even if you don't use it commands directly.
-    #+begin_src emacs-lisp
-   (use-package projectile
-  :ensure t
-  :init
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("s-p" . projectile-command-map)
-              ("C-c p" . projectile-command-map)))
-   #+end_src
 
+    #+begin_src emacs-lisp
+
+    (use-package projectile
+      :diminish projectile-mode
+      :config (projectile-mode)
+      :custom ((projectile-completion-system 'ivy))
+      :bind-keymap
+      ("C-c p" . projectile-command-map)
+      :init
+      (projectile-mode +1)
+      ;; NOTE: Set this to the folder where you keep your Git repos!
+      (when (file-directory-p "~/Projects/Code")
+	(defvar projectile-project-search-path '("~/Projects/Code")))
+      (defvar projectile-switch-project-action #'projectile-dired))
+
+    (use-package counsel-projectile
+      :after projectile
+      :config (counsel-projectile-mode))
+
+
+    #+end_src
 
 
 *** page-break-lines
@@ -327,7 +339,6 @@ Eshell is an Emacs 'shell' that is written in Elisp.
 )
 #+end_src
 
-
 ** Vterm
 Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets the shell to be used in M-x shell, M-x term, M-x ansi-term and M-x vterm. By default, the shell is set to "cmd" but could change it to "pwsh" if you prefer.
 
@@ -400,7 +411,66 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 
   #+end_src
 
+* DIRED Configuration
+  #+begin_src emacs-lisp
 
+     (use-package dired
+       :ensure nil
+       :commands (dired dired-jump)
+       :bind (("C-x C-j" . dired-jump))
+       :custom
+       (setq dired-listing-switches "-agho --group-directories-first")
+     (global-set-key 'normal 'diredmode-map
+       "h" 'dired-single-up-directory
+       "H" 'dired-omit-mode
+       "l" 'dired-single-buffer
+       "y" 'dired-ranger-copy
+       "X" 'dired-ranger-move
+       "p" 'dired-ranger-paste)
+     ;;  :config
+      ;; (evil-collection-define-key 'normal 'dired-mode-map
+       ;;  "h" 'dired-single-up-directory
+	;; "l" 'dired-single-buffer))
+     )
+     (use-package dired-single
+       :commands (dired dired-jump))
+
+     (use-package all-the-icons-dired
+       :hook (dired-mode . all-the-icons-dired-mode))
+  (use-package dired-rainbow
+      :defer 2
+      :config
+    ;;  (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+      (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+      (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+      (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+      (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+      (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+      (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+      (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+      (dired-rainbow-define log "#c17d11" ("log"))
+      (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+      (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+      (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+      (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+      (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+      (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+      (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+      (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+      (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+      (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+      (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
+
+
+  (use-package dired-single
+    :defer t)
+
+  (use-package dired-ranger
+    :defer t)
+
+  (use-package dired-collapse
+    :defer t)
+  #+end_src
 
 * DEVELOPMENT
 ** Languages
@@ -408,9 +478,9 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 **** lsp-mode
      We use the excellent [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]] to enable IDE-like functionality for many different programming languages via “language servers” that speak the [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]]. Before trying to set up =lsp-mode= for a particular language, check out the [[Y][documetation for your language]] so that you can learn which language servers are available and how to install them.
 
-     The ~lsp-keymap-prefix~ setting enables you to define a prefix for where ~lsp-mode~'s default keybindings will be added. I *hight recommend* using the prefix to find out what you can do with ~lsp-mode~ in a buffer.
+     The ~lsp-keymap-prefix~ setting enables you to define a prefix for where ~lsp-mode~'s default keybindings will be added. I *highly recommend* using the prefix to find out what you can do with ~lsp-mode~ in a buffer.
 
-     The =which-key= integration adds helpful descriptios of the various keys so you should be able to learn a lot just by pressing ~C-c l~ in a =lsp-mode= buffer and trying different things that you find there.
+     The =which-key= integration adds helpful descriptions of the various keys so you should be able to learn a lot just by pressing ~C-c l~ in a =lsp-mode= buffer and trying different things that you find there.
 
      #+begin_src emacs-lisp
 
@@ -514,8 +584,9 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
       (pyvenv-mode 1))
     #+end_src
 
+
 *** Company Mode
-    [[http://company-mode.github.io/][Company Mode]] providers a nicer in-buffer completio interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE. We add a simple configuration to make the keybindigs a little more useful(=TAB= now completes teh selection and initiates completion at the current location if needed.
+    [[http://company-mode.github.io/][Company Mode]] providers a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE. We add a simple configuration to make the keybindigs a little more useful(=TAB= now completes teh selection and initiates completion at the current location if needed.
     We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
     #+begin_src emacs-lisp
     (use-package company
@@ -533,10 +604,54 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
       :hook (company-mode . company-box-mode))
     #+end_src
 
-* 
+*** lsp-java
+    #+begin_src emacs-lisp
+    (use-package lsp-java
+    :config
+    (add-hook 'java-mode-hook 'lsp)
+    (setq
+	 lsp-java-server-install-dir "~/.emacs.d/java_lsp/"
+         lsp-java-workspace-dir "~/Projects/Code/"
+	 lsp-java-java-path "C:/Program Files/Java/jdk-16.0.1/bin/java.exe"))
+    #+end_src
 
-* 
+* Productivity
+** snippets
+   #+begin_src emacs-lisp
 
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+
+   #+end_src
+** Rainbow Delimiters
+   [[https://github.com/Fanael/rainbow-delimiters][Rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth. This makes it a lot easier to visually match parentheses in Emacs lisp code without having to count them yourself.
+   #+begin_src emacs-lisp
+   (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode)
+   #+end_src
+
+* Magit
+  [[https://magit.vc/][Magit]] is the best Git interfac in this world. Common Git operations are easy to execute quickly using Magit’s command panel system.
+  #+begin_src emacs-lisp
+
+;;  (use-package magit			
+;;  :ensure t
+ ;;   :commands magit-status
+  ;;  :custom
+   ;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+  ;; NOTE: Make sure to configure a GitHub token before using this package!
+  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+;;  (use-package forge
+ ;;   :after magit)
+
+
+  #+end_src
+  
 * 
 
 * 

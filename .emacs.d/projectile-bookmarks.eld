@@ -1,1 +1,1 @@
-("~/Projects/Code/test_repo/" "~/.emacs.d/elpa/vterm-20210804.405/")
+("~/Projects/Code/wallpapers/" "~/Projects/Code/test_repo/" "~/Projects/Code/fonts/" "c:/Users/Patta/.dotfiles/" "~/.emacs.d/elpa/vterm-20210804.405/")
