@@ -47,22 +47,50 @@
 (use-package general
   :ensure t
   :config
-  (general-evil-setup t))
+  (general-evil-setup t)
+
+  (general-create-definer dw/leader-key-def
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (general-create-definer dw/ctrl-c-keys
+    :prefix "C-c")
+  )
+
+;;  (set-face-attribute 'default nil
+;;	    :font "FiraCode Nerd Font 11"
+;;	    :weight 'medium)
+;;  (set-face-attribute 'variable-pitch nil
+;;	    :font "FiraCode Nerd Font 11"
+;;	    :weight 'medium)
+;;  (set-face-attribute 'fixed-pitch nil
+;;	    :font "Iosevka Aile"
+;;	    :weight 'regular)
+
+  ;;(setq-default line-spacing 0.10)
+
+  ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
+  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))
+
 
 (set-face-attribute 'default nil
-          :font "FiraCode Nerd Font 11"
-	  :weight 'medium)
-(set-face-attribute 'variable-pitch nil
-          :font "FiraCode Nerd Font 11"
-	  :weight 'medium)
+		       :font "JetBrains Mono"
+		       :weight 'medium
+		      ;;  :height 110
+)
+;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil
-          :font "Cantarell 11"
-	  :weight 'regular)
-
-;;(setq-default line-spacing 0.10)
-
-;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
-(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))
+		    :font "JetBrains Mono"
+		    :weight 'medium
+		  ;;  :height 110
+)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil
+		    ;; :font "Cantarell"
+		    :font "Iosevka Aile"
+		  ;;  :height 120
+		    :weight 'medium)
 
 (use-package command-log-mode
 :commands command-log-mode)
@@ -71,21 +99,29 @@
  :ensure t)
 
 (use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  (projectile-mode +1)
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Projects/Code")
-    (defvar projectile-project-search-path '("~/Projects/Code")))
-  (defvar projectile-switch-project-action #'projectile-dired))
+      :diminish projectile-mode
+      :config (projectile-mode)
+      :custom ((projectile-completion-system 'ivy))
+      :bind-keymap
+      ("C-c p" . projectile-command-map)
+      :init
+      (projectile-mode +1)
+      ;; NOTE: Set this to the folder where you keep your Git repos!
+      (when (file-directory-p "~/Projects/Code")
+	(defvar projectile-project-search-path '("~/Projects/Code")))
+      (defvar projectile-switch-project-action #'projectile-dired))
 
-(use-package counsel-projectile
-  :after projectile
-  :config (counsel-projectile-mode))
+    (use-package counsel-projectile
+      :after projectile
+      :config (counsel-projectile-mode))
+;; Some keybindings using general.el
+(dw/leader-key-def
+  "pf"  'projectile-find-file
+  "ps"  'projectile-switch-project
+  "pF"  'consult-ripgrep
+  "pp"  'projectile-find-file
+  "pc"  'projectile-compile-project
+  "pd"  'projectile-dired)
 
 (use-package dashboard
        :ensure t
@@ -127,15 +163,15 @@
   (load-theme 'doom-palenight t)
 
 (use-package doom-modeline
-:init (doom-modeline-mode 1)
-:custom ((doom-modeline-height 15)))
+  :init (doom-modeline-mode 1)
+)
 
 (use-package which-key
   :defer 0
   :diminish which-key-mode
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 1))
+  (setq which-key-idle-delay 0.3))
 
 (defun run-powershell ()
   "Run powershell"
@@ -150,18 +186,124 @@
  :custom
  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
+;; Increase the size of various headings
+(set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight 'bold :height 1.3)
+(dolist (face '((org-level-1 . 1.2)
+                (org-level-2 . 1.1)
+                (org-level-3 . 1.05)
+                (org-level-4 . 1.0)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'medium :height (cdr face)))
+
+;; Make sure org-indent face is available
+(require 'org-indent)
+
+;; Ensure that anything that should be fixed-pitch in Org files appears that way
+ (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+ (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+;; Get rid of the background on column views
+(set-face-attribute 'org-column nil :background nil)
+(set-face-attribute 'org-column-title nil :background nil)
+
 (with-eval-after-load 'org
   ;; This is needed as of Org 9.2
   (require 'org-tempo)
 
-  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python")))
+(add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+(add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+(add-to-list 'org-structure-template-alist '("py" . "src python"))
+(add-to-list 'org-structure-template-alist '("go" . "src go"))
+(add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+(add-to-list 'org-structure-template-alist '("json" . "src json"))
+)
 
 (setq org-src-fontify-natively t
     org-src-tab-acts-natively t
     org-confirm-babel-evaluate nil
     org-edit-src-content-indentation 0)
+
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
+
+(defun dw/org-present-prepare-slide ()
+  (org-overview)
+  (org-show-entry)
+  (org-show-children))
+
+(defun dw/org-present-hook ()
+  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                     (header-line (:height 4.5) variable-pitch)
+                                     (org-document-title (:height 1.75) org-document-title)
+                                     (org-code (:height 1.55) org-code)
+                                     (org-verbatim (:height 1.55) org-verbatim)
+                                     (org-block (:height 1.25) org-block)
+                                     (org-block-begin-line (:height 0.7) org-block)))
+  (setq header-line-format " ")
+  (org-appear-mode -1)
+  (org-display-inline-images)
+  (dw/org-present-prepare-slide))
+
+(defun dw/org-present-quit-hook ()
+  (setq-local face-remapping-alist '((default variable-pitch default)))
+  (setq header-line-format nil)
+  (org-present-small)
+  (org-remove-inline-images)
+  (org-appear-mode 1))
+
+(defun dw/org-present-prev ()
+  (interactive)
+  (org-present-prev)
+  (dw/org-present-prepare-slide))
+
+(defun dw/org-present-next ()
+  (interactive)
+  (org-present-next)
+  (dw/org-present-prepare-slide))
+
+(use-package org-present
+  :bind (:map org-present-mode-keymap
+         ("C-c C-j" . dw/org-present-next)
+         ("C-c C-k" . dw/org-present-prev))
+  :hook ((org-present-mode . dw/org-present-hook)
+         (org-present-mode-quit . dw/org-present-quit-hook)))
+
+(defun dw/org-start-presentation ()
+  (interactive)
+  (org-tree-slide-mode 1)
+  (setq text-scale-mode-amount 3)
+  (text-scale-mode 1))
+
+(defun dw/org-end-presentation ()
+  (interactive)
+  (text-scale-mode 0)
+  (org-tree-slide-mode 0))
+
+(use-package org-tree-slide
+  :defer t
+  :after org
+  :commands org-tree-slide-mode
+  :config
+  (evil-define-key 'normal org-tree-slide-mode-map
+    (kbd "q") 'dw/org-end-presentation
+    (kbd "C-j") 'org-tree-slide-move-next-tree
+    (kbd "C-k") 'org-tree-slide-move-previous-tree)
+  (setq org-tree-slide-slide-in-effect nil
+        org-tree-slide-activate-message "Presentation started."
+        org-tree-slide-deactivate-message "Presentation ended."
+        org-tree-slide-header t))
 
 (use-package eshell-syntax-highlighting
   :ensure t
@@ -177,6 +319,80 @@
       eshell-scroll-to-bottom-on-input t
       eshell-destroy-buffer-when-process-dies t
 )
+
+
+;; This prompt function mostly replicates my custom zsh prompt setup
+;; that is powered by github.com/denysdovhan/spaceship-prompt.
+(defun dw/eshell-prompt ()
+  (let ((current-branch (magit-get-current-branch))
+        (package-version (dw/get-current-package-version)))
+    (concat
+     "\n"
+     (propertize (system-name) 'face `(:foreground "#62aeed"))
+     (propertize " ॐ " 'face `(:foreground "white"))
+     (propertize (dw/get-prompt-path) 'face `(:foreground "#82cfd3"))
+     (when current-branch
+       (concat
+        (propertize " • " 'face `(:foreground "white"))
+        (propertize (concat " " current-branch) 'face `(:foreground "#c475f0"))))
+     (when package-version
+       (concat
+        (propertize " @ " 'face `(:foreground "white"))
+        (propertize package-version 'face `(:foreground "#e8a206"))))
+     (propertize " • " 'face `(:foreground "white"))
+     (propertize (format-time-string "%I:%M:%S %p") 'face `(:foreground "#5a5b7f"))
+     (if (= (user-uid) 0)
+         (propertize "\n#" 'face `(:foreground "red2"))
+       (propertize "\nλ" 'face `(:foreground "#aece4a")))
+     (propertize " " 'face `(:foreground "white")))))
+
+
+
+(defun dw/eshell-configure ()
+  (require 'evil-collection-eshell)
+  (evil-collection-eshell-setup)
+
+  (use-package xterm-color)
+
+  (push 'eshell-tramp eshell-modules-list)
+  (push 'xterm-color-filter eshell-preoutput-filter-functions)
+  (delq 'eshell-handle-ansi-color eshell-output-filter-functions)
+
+  ;; Save command history when commands are entered
+  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+
+  (add-hook 'eshell-before-prompt-hook
+            (lambda ()
+              (setq xterm-color-preserve-properties t)))
+
+  ;; Truncate buffer for performance
+  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+
+  ;; We want to use xterm-256color when running interactive commands
+  ;; in eshell but not during other times when we might be launching
+  ;; a shell command to gather its output.
+  (add-hook 'eshell-pre-command-hook
+            (lambda () (setenv "TERM" "xterm-256color")))
+  (add-hook 'eshell-post-command-hook
+            (lambda () (setenv "TERM" "dumb")))
+
+  ;; Use completion-at-point to provide completions in eshell
+  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+
+  ;; Initialize the shell history
+  (eshell-hist-initialize)
+
+ ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'consult-history)
+ ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
+ ;; (evil-normalize-keymaps)
+   (setq eshell-prompt-function      'dw/eshell-prompt
+        eshell-prompt-regexp        "^λ "
+        eshell-history-size         10000
+        eshell-buffer-maximum-lines 10000
+        eshell-hist-ignoredups t
+        eshell-highlight-prompt t
+        eshell-scroll-to-bottom-on-input t
+        eshell-prefer-lisp-functions nil))
 
 (use-package ivy
 
@@ -292,11 +508,25 @@
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
   (lsp-enable-which-key-integration t))
+;; keybindings using general.el
+(dw/leader-key-def
+  "l"  '(:ignore t :which-key "lsp")
+  "ld" 'xref-find-definitions
+  "lr" 'xref-find-references
+  "ln" 'lsp-ui-find-next-reference
+  "lp" 'lsp-ui-find-prev-reference
+  "ls" 'counsel-imenu
+  "le" 'lsp-ui-flycheck-list
+  "lS" 'lsp-ui-sideline-mode
+  "lX" 'lsp-execute-code-action)
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
+  :config
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-show))
 
 (use-package lsp-treemacs
   :after lsp)
@@ -368,17 +598,62 @@
 (use-package rainbow-delimiters
  :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package flycheck
+  :defer t
+  :hook (lsp-mode . flycheck-mode))
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+
+(use-package rainbow-mode
+  :defer t
+  :hook (org-mode
+         emacs-lisp-mode
+         web-mode
+         typescript-mode
+         js2-mode))
+
 ;;  (use-package magit			
 ;;  :ensure t
- ;;   :commands magit-status
-  ;;  :custom
-   ;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+;;   :commands magit-status
+;;  :custom
+;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-  ;; NOTE: Make sure to configure a GitHub token before using this package!
-  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+;; NOTE: Make sure to configure a GitHub token before using this package!
+;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
   ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
 ;;  (use-package forge
- ;;   :after magit)
+;;   :after magit)
+
+(use-package elfeed
+  :commands elfeed
+  :config
+  (setq elfeed-feeds
+    '("https://nullprogram.com/feed/"
+      "https://ambrevar.xyz/atom.xml"
+      "https://guix.gnu.org/feeds/blog.atom"
+      "https://valdyas.org/fading/feed/"
+      "https://www.reddit.com/r/emacs/.rss")))
+
+(use-package calfw
+  :disabled
+  :commands cfw:open-org-calendar
+  :config
+  (setq cfw:fchar-junction ?╋
+        cfw:fchar-vertical-line ?┃
+        cfw:fchar-horizontal-line ?━
+        cfw:fchar-left-junction ?┣
+        cfw:fchar-right-junction ?┫
+        cfw:fchar-top-junction ?┯
+        cfw:fchar-top-left-corner ?┏
+        cfw:fchar-top-right-corner ?┓)
+
+  (use-package calfw-org
+    :config
+    (setq cfw:org-agenda-schedule-args '(:timestamp))))
+
+(dw/leader-key-def
+  "cc"  '(cfw:open-org-calendar :which-key "calendar"))
 
 ;;Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
