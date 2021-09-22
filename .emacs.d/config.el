@@ -162,9 +162,29 @@
 ;;  (load-theme 'doom-one t)
   (load-theme 'doom-palenight t)
 
+;; You must run (all-the-icons-install-fonts) one time after
+;; installing this package!
+
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
+
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
-)
+
+ :init (doom-modeline-mode 1)
+  :custom-face
+  (mode-line ((t (:height 0.90))))
+  (mode-line-inactive ((t (:height 0.90))))
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-bar-width 6)
+  (doom-modeline-lsp t)
+ (doom-modeline-github nil)
+  (doom-modeline-mu4e nil)
+  (doom-modeline-irc t)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-persp-name nil)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-major-mode-icon nil))
 
 (use-package which-key
   :defer 0

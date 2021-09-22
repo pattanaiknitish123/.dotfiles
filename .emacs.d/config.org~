@@ -84,13 +84,22 @@ You can also use ~M-x auto-package-update-now~ to update right now!
    #+end_src
 
 ** General Keybindings
-General.el allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  General makes setting keybindings (especially with SPC) much easier.  All of the keybindings we set later in the config depend on general being loaded.
+[[https://github.com/noctuid/general.el][General.el]] allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  General makes setting keybindings (especially with SPC) much easier.  All of the keybindings we set later in the config depend on general being loaded.
 
 #+begin_src emacs-lisp
 (use-package general
   :ensure t
   :config
-  (general-evil-setup t))
+  (general-evil-setup t)
+
+  (general-create-definer dw/leader-key-def
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (general-create-definer dw/ctrl-c-keys
+    :prefix "C-c")
+  )
 #+end_src
 
   
@@ -176,7 +185,14 @@ But in linux, it is so easy. You don't need to manually install fonts. It instal
     (use-package counsel-projectile
       :after projectile
       :config (counsel-projectile-mode))
-
+;; Some keybindings using general.el
+(dw/leader-key-def
+  "pf"  'projectile-find-file
+  "ps"  'projectile-switch-project
+  "pF"  'consult-ripgrep
+  "pp"  'projectile-find-file
+  "pc"  'projectile-compile-project
+  "pd"  'projectile-dired)
 
     #+end_src
 
@@ -295,8 +311,9 @@ the mouse scroll for zooming in and out.
   :diminish which-key-mode
   :config
   (which-key-mode)
-  (setq which-key-idle-delay 1))
+  (setq which-key-idle-delay 0.3))
   #+end_src
+
 
 * PowerShell Integration In Emacs
 
@@ -411,6 +428,7 @@ We want the same syntax highlighting in source blocks as in the native language 
 
    #+end_src
 ** Presentations ORG_MODE
+*** ORG PRESENT
    =org-present= is the package I use for giving presentation in Emacs. I like it because it's simple and allows me to customize the display of it pretty easily.
    #+begin_src emacs-lisp
 
@@ -458,6 +476,53 @@ We want the same syntax highlighting in source blocks as in the native language 
 
 
    #+end_src
+*** Org-Tree-Slide
+    I previously used =org-tree-slide= for presentations before trying out =org-present=. I'm keeping my old configuration around here just in case I need to use it again!
+    #+begin_src emacs-lisp
+
+(defun dw/org-start-presentation ()
+  (interactive)
+  (org-tree-slide-mode 1)
+  (setq text-scale-mode-amount 3)
+  (text-scale-mode 1))
+
+(defun dw/org-end-presentation ()
+  (interactive)
+  (text-scale-mode 0)
+  (org-tree-slide-mode 0))
+
+(use-package org-tree-slide
+  :defer t
+  :after org
+  :commands org-tree-slide-mode
+  :config
+  (evil-define-key 'normal org-tree-slide-mode-map
+    (kbd "q") 'dw/org-end-presentation
+    (kbd "C-j") 'org-tree-slide-move-next-tree
+    (kbd "C-k") 'org-tree-slide-move-previous-tree)
+  (setq org-tree-slide-slide-in-effect nil
+        org-tree-slide-activate-message "Presentation started."
+        org-tree-slide-deactivate-message "Presentation ended."
+        org-tree-slide-header t))
+
+
+    #+end_src
+
+** Center Org Buffers
+   We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]] to center =org-mode= buffers for a more pleasing writing experience as it centers the contents of the buffer horizontally to seem more like you are editing a document. This is really a matter of personal preference so you can remove the block below if you don't like the behavior.
+   I don't personally don't like it. But still I want to include the code.
+ ;;  #+begin_src emacs-lisp
+
+;;(defun efs/org-mode-visual-fill ()
+;;  (setq visual-fill-column-width 100
+;;        visual-fill-column-center-text t)
+;;  (visual-fill-column-mode 1))
+
+;;(use-package visual-fill-column
+;;  :hook (org-mode . efs/org-mode-visual-fill))
+
+
+ ;;  #+end_src
 
 * SHELLS WITHIN EMACS
 
@@ -479,6 +544,81 @@ Eshell is an Emacs 'shell' that is written in Elisp.
       eshell-scroll-to-bottom-on-input t
       eshell-destroy-buffer-when-process-dies t
 )
+
+
+;; This prompt function mostly replicates my custom zsh prompt setup
+;; that is powered by github.com/denysdovhan/spaceship-prompt.
+(defun dw/eshell-prompt ()
+  (let ((current-branch (magit-get-current-branch))
+        (package-version (dw/get-current-package-version)))
+    (concat
+     "\n"
+     (propertize (system-name) 'face `(:foreground "#62aeed"))
+     (propertize " ॐ " 'face `(:foreground "white"))
+     (propertize (dw/get-prompt-path) 'face `(:foreground "#82cfd3"))
+     (when current-branch
+       (concat
+        (propertize " • " 'face `(:foreground "white"))
+        (propertize (concat " " current-branch) 'face `(:foreground "#c475f0"))))
+     (when package-version
+       (concat
+        (propertize " @ " 'face `(:foreground "white"))
+        (propertize package-version 'face `(:foreground "#e8a206"))))
+     (propertize " • " 'face `(:foreground "white"))
+     (propertize (format-time-string "%I:%M:%S %p") 'face `(:foreground "#5a5b7f"))
+     (if (= (user-uid) 0)
+         (propertize "\n#" 'face `(:foreground "red2"))
+       (propertize "\nλ" 'face `(:foreground "#aece4a")))
+     (propertize " " 'face `(:foreground "white")))))
+
+
+
+(defun dw/eshell-configure ()
+  (require 'evil-collection-eshell)
+  (evil-collection-eshell-setup)
+
+  (use-package xterm-color)
+
+  (push 'eshell-tramp eshell-modules-list)
+  (push 'xterm-color-filter eshell-preoutput-filter-functions)
+  (delq 'eshell-handle-ansi-color eshell-output-filter-functions)
+
+  ;; Save command history when commands are entered
+  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+
+  (add-hook 'eshell-before-prompt-hook
+            (lambda ()
+              (setq xterm-color-preserve-properties t)))
+
+  ;; Truncate buffer for performance
+  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+
+  ;; We want to use xterm-256color when running interactive commands
+  ;; in eshell but not during other times when we might be launching
+  ;; a shell command to gather its output.
+  (add-hook 'eshell-pre-command-hook
+            (lambda () (setenv "TERM" "xterm-256color")))
+  (add-hook 'eshell-post-command-hook
+            (lambda () (setenv "TERM" "dumb")))
+
+  ;; Use completion-at-point to provide completions in eshell
+  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+
+  ;; Initialize the shell history
+  (eshell-hist-initialize)
+
+ ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'consult-history)
+ ;; (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
+ ;; (evil-normalize-keymaps)
+   (setq eshell-prompt-function      'dw/eshell-prompt
+        eshell-prompt-regexp        "^λ "
+        eshell-history-size         10000
+        eshell-buffer-maximum-lines 10000
+        eshell-hist-ignoredups t
+        eshell-highlight-prompt t
+        eshell-scroll-to-bottom-on-input t
+        eshell-prefer-lisp-functions nil))
+
 #+end_src
 
 ** Vterm
@@ -637,7 +777,17 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
   (lsp-enable-which-key-integration t))
-
+;; keybindings using general.el
+(dw/leader-key-def
+  "l"  '(:ignore t :which-key "lsp")
+  "ld" 'xref-find-definitions
+  "lr" 'xref-find-references
+  "ln" 'lsp-ui-find-next-reference
+  "lp" 'lsp-ui-find-prev-reference
+  "ls" 'counsel-imenu
+  "le" 'lsp-ui-flycheck-list
+  "lS" 'lsp-ui-sideline-mode
+  "lX" 'lsp-execute-code-action)
 
      #+end_src
 **** lsp-ui
@@ -645,8 +795,11 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
      #+begin_src emacs-lisp
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
+  :config
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-hover nil)
+  (setq lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-show))
      #+end_src
 **** lsp-treemacs
      [[https://github.com/emacs-lsp/lsp-treemacs][lsp-treemacs]] provides nice tree views for different aspects of your code like symbols in a file, references of a symbol, or diagnostic messages(errors and warnings) that are found in your code.
@@ -774,6 +927,35 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
    (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
    #+end_src
+** Syntax checking with Flycheck
+   #+begin_src emacs-lisp
+
+(use-package flycheck
+  :defer t
+  :hook (lsp-mode . flycheck-mode))
+
+
+   #+end_src
+** Smart Parens
+   #+begin_src emacs-lisp
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+   #+end_src
+** Rainbow Mode
+   Sets the background of HTML color strings in buffers to be the color mentioned.
+   #+begin_src emacs-lisp
+
+(use-package rainbow-mode
+  :defer t
+  :hook (org-mode
+         emacs-lisp-mode
+         web-mode
+         typescript-mode
+         js2-mode))
+
+
+   #+end_src
 
 * Magit
   [[https://magit.vc/][Magit]] is the best Git interfac in this world. Common Git operations are easy to execute quickly using Magit’s command panel system.
@@ -794,9 +976,47 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 
   #+end_src
   
-* 
+* RSS with Elfeed
+  [[https://github.com/skeeto/elfeed][Elfeed]] looks like a great RSS feed reader. Not using it much yet, but definitely looking forward to using it to keep track of a few different blogs I follow. Also seems to be great for following subreddits like /r/Emacs.
+  #+begin_src emacs-lisp
 
-* 
+(use-package elfeed
+  :commands elfeed
+  :config
+  (setq elfeed-feeds
+    '("https://nullprogram.com/feed/"
+      "https://ambrevar.xyz/atom.xml"
+      "https://guix.gnu.org/feeds/blog.atom"
+      "https://valdyas.org/fading/feed/"
+      "https://www.reddit.com/r/emacs/.rss")))
+  #+end_src
+
+* Calendar
+  [[https://github.com/kiwanami/emacs-calfw][calfw]] is a gorgeous calendar UI that is able to show all of my scheduled ORG Agenda items.
+  #+begin_src emacs-lisp
+
+(use-package calfw
+  :disabled
+  :commands cfw:open-org-calendar
+  :config
+  (setq cfw:fchar-junction ?╋
+        cfw:fchar-vertical-line ?┃
+        cfw:fchar-horizontal-line ?━
+        cfw:fchar-left-junction ?┣
+        cfw:fchar-right-junction ?┫
+        cfw:fchar-top-junction ?┯
+        cfw:fchar-top-left-corner ?┏
+        cfw:fchar-top-right-corner ?┓)
+
+  (use-package calfw-org
+    :config
+    (setq cfw:org-agenda-schedule-args '(:timestamp))))
+
+(dw/leader-key-def
+  "cc"  '(cfw:open-org-calendar :which-key "calendar"))
+
+
+  #+end_src
 
 * 
 

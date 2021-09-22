@@ -267,41 +267,41 @@ the mouse scroll for zooming in and out.
 
 *NOTE*: The first time ou load your configuration on a new machine, you'll need to run 'M-x all-the-icons-install-fonts' so that mode line icons display correctly. Hence it need all-the-icons package( I already installed)
 
-;; #+begin_src emacs-lisp
+ #+begin_src emacs-lisp
 
 ;; You must run (all-the-icons-install-fonts) one time after
 ;; installing this package!
 
-;;(use-package minions
-;;  :hook (doom-modeline-mode . minions-mode))
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
 
-;;(use-package doom-modeline
+(use-package doom-modeline
 
-;; :init (doom-modeline-mode 1)
-;;  :custom-face
-;;  (mode-line ((t (:height 0.90))))
-;;  (mode-line-inactive ((t (:height 0.90))))
-;;  :custom
-;;  (doom-modeline-height 15)
-;;  (doom-modeline-bar-width 6)
-;;  (doom-modeline-lsp t)
-;;  (doom-modeline-github nil)
-;;  (doom-modeline-mu4e nil)
-;;  (doom-modeline-irc t)
-;;  (doom-modeline-minor-modes t)
-;;  (doom-modeline-persp-name nil)
-;;  (doom-modeline-buffer-file-name-style 'truncate-except-project)
-;;  (doom-modeline-major-mode-icon nil))
-
-
-;;#+end_src
+ :init (doom-modeline-mode 1)
+  :custom-face
+  (mode-line ((t (:height 0.90))))
+  (mode-line-inactive ((t (:height 0.90))))
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-bar-width 6)
+  (doom-modeline-lsp t)
+ (doom-modeline-github nil)
+  (doom-modeline-mu4e nil)
+  (doom-modeline-irc t)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-persp-name nil)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-major-mode-icon nil))
 
 
- #+begin_src emacs-lisp
-  (use-package doom-modeline
-  :init (doom-modeline-mode 1)
-)
-  #+end_src
+#+end_src
+
+
+;; #+begin_src emacs-lisp
+;;   (use-package doom-modeline
+;;  :init (doom-modeline-mode 1)
+;;)
+;;  #+end_src
 * WHICK KEY
 [[https://github.com/justbur/emacs-which-key][whick-key]] is a useful UI panel that appears when you start pressing any key binding in Emacs to offer you all passible completions for the prefix. For example, if you press ~C-c~ a panel will appear at the botton of the frame displaying all of the bindings under that prefix and which command they run. This is very useful for learning the possible key bindings in the mode of your current buffer.
 
