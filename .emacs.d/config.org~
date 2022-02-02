@@ -267,41 +267,41 @@ the mouse scroll for zooming in and out.
 
 *NOTE*: The first time ou load your configuration on a new machine, you'll need to run 'M-x all-the-icons-install-fonts' so that mode line icons display correctly. Hence it need all-the-icons package( I already installed)
 
-;; #+begin_src emacs-lisp
+ #+begin_src emacs-lisp
 
 ;; You must run (all-the-icons-install-fonts) one time after
 ;; installing this package!
 
-;;(use-package minions
-;;  :hook (doom-modeline-mode . minions-mode))
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
 
-;;(use-package doom-modeline
+(use-package doom-modeline
 
-;; :init (doom-modeline-mode 1)
-;;  :custom-face
-;;  (mode-line ((t (:height 0.90))))
-;;  (mode-line-inactive ((t (:height 0.90))))
-;;  :custom
-;;  (doom-modeline-height 15)
-;;  (doom-modeline-bar-width 6)
-;;  (doom-modeline-lsp t)
-;;  (doom-modeline-github nil)
-;;  (doom-modeline-mu4e nil)
-;;  (doom-modeline-irc t)
-;;  (doom-modeline-minor-modes t)
-;;  (doom-modeline-persp-name nil)
-;;  (doom-modeline-buffer-file-name-style 'truncate-except-project)
-;;  (doom-modeline-major-mode-icon nil))
-
-
-;;#+end_src
+ :init (doom-modeline-mode 1)
+  :custom-face
+  (mode-line ((t (:height 0.90))))
+  (mode-line-inactive ((t (:height 0.90))))
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-bar-width 6)
+  (doom-modeline-lsp t)
+ (doom-modeline-github nil)
+  (doom-modeline-mu4e nil)
+  (doom-modeline-irc t)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-persp-name nil)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-major-mode-icon nil))
 
 
- #+begin_src emacs-lisp
-  (use-package doom-modeline
-  :init (doom-modeline-mode 1)
-)
-  #+end_src
+#+end_src
+
+
+;; #+begin_src emacs-lisp
+;;   (use-package doom-modeline
+;;  :init (doom-modeline-mode 1)
+;;)
+;;  #+end_src
 * WHICK KEY
 [[https://github.com/justbur/emacs-which-key][whick-key]] is a useful UI panel that appears when you start pressing any key binding in Emacs to offer you all passible completions for the prefix. For example, if you press ~C-c~ a panel will appear at the botton of the frame displaying all of the bindings under that prefix and which command they run. This is very useful for learning the possible key bindings in the mode of your current buffer.
 
@@ -879,6 +879,68 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
       (pyvenv-mode 1))
     #+end_src
 
+*** HTML
+    #+begin_src emacs-lisp
+    (use-package web-mode
+      :ensure t)
+
+;;  (setup (:pkg web-mode)
+;;      (:file-match "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
+      (setq-default web-mode-code-indent-offset 2)
+      (setq-default web-mode-markup-indent-offset 2)
+      (setq-default web-mode-attribute-indent-offset 2)
+
+    ;; 1. Start the server with `httpd-start'
+    ;; 2. Use `impatient-mode' on any buffer
+;;  (setup (:pkg impatient-mode :straight t))
+;;  (setup (:pkg skewer-mode :straight t))
+(use-package impatient-mode :ensure t)
+(use-package skewer-mode :ensure t)
+
+(add-hook 'web-mode-hook  'emmet-mode) 
+    #+end_src
+
+*** JavaScript & TypeScript
+    #+begin_src emacs-lisp
+
+(use-package typescript-mode :ensure t)
+;;  (setup (:pkg typescript-mode)
+;;      (:file-match "\\.ts\\'")
+        (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+      (setq typescript-indent-level 2)
+
+    (defun dw/set-js-indentation ()
+      (setq-default js-indent-level 2)
+      (setq-default evil-shift-width js-indent-level)
+      (setq-default tab-width 2))
+
+(use-package js2-mode :ensure t)
+;;  (setup (:pkg js2-mode)
+;;      (:file-match "\\.jsx?\\'")
+        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
+
+      ;; Use js2-mode for Node scripts
+;;      (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
+
+      ;; Don't use built-in syntax checking
+      (setq js2-mode-show-strict-warnings nil)
+
+      ;; Set up proper indentation in JavaScript and JSON files
+      (add-hook 'js2-mode-hook #'dw/set-js-indentation)
+      (add-hook 'json-mode-hook #'dw/set-js-indentation)
+
+;;(use-package apheleia :ensure t)
+;;  (setup (:pkg apheleia)
+;;      (apheleia-global-mode +1)
+
+
+    #+end_src
 
 *** Company Mode
     [[http://company-mode.github.io/][Company Mode]] providers a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE. We add a simple configuration to make the keybindigs a little more useful(=TAB= now completes teh selection and initiates completion at the current location if needed.
@@ -897,6 +959,11 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 
     (use-package company-box
       :hook (company-mode . company-box-mode))
+
+(defun my-web-mode-hook ()
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files))
+)
+
     #+end_src
 
 *** lsp-java

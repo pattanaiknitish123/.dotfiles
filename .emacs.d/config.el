@@ -588,19 +588,77 @@
   :config
   (pyvenv-mode 1))
 
-(use-package company
-  :after lsp-mode
-  :hook (lsp-mode . company-mode)
-  :bind (:map company-active-map
-	 ("<tab>" . company-complete-selection))
-	(:map lsp-mode-map
-	 ("<tab>". company-indent-or-complete-common))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+(use-package web-mode
+      :ensure t)
 
-(use-package company-box
-  :hook (company-mode . company-box-mode))
+;;  (setup (:pkg web-mode)
+;;      (:file-match "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
+      (setq-default web-mode-code-indent-offset 2)
+      (setq-default web-mode-markup-indent-offset 2)
+      (setq-default web-mode-attribute-indent-offset 2)
+
+    ;; 1. Start the server with `httpd-start'
+    ;; 2. Use `impatient-mode' on any buffer
+;;  (setup (:pkg impatient-mode :straight t))
+;;  (setup (:pkg skewer-mode :straight t))
+(use-package impatient-mode :ensure t)
+(use-package skewer-mode :ensure t)
+
+;;(add-hook 'web-mode-hook  'emmet-mode)
+
+(use-package typescript-mode :ensure t)
+;;  (setup (:pkg typescript-mode)
+;;      (:file-match "\\.ts\\'")
+        (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+      (setq typescript-indent-level 2)
+
+    (defun dw/set-js-indentation ()
+      (setq-default js-indent-level 2)
+      (setq-default evil-shift-width js-indent-level)
+      (setq-default tab-width 2))
+
+(use-package js2-mode :ensure t)
+;;  (setup (:pkg js2-mode)
+;;      (:file-match "\\.jsx?\\'")
+        (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-mode))
+
+      ;; Use js2-mode for Node scripts
+;;      (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
+
+      ;; Don't use built-in syntax checking
+      (setq js2-mode-show-strict-warnings nil)
+
+      ;; Set up proper indentation in JavaScript and JSON files
+      (add-hook 'js2-mode-hook #'dw/set-js-indentation)
+      (add-hook 'json-mode-hook #'dw/set-js-indentation)
+
+;;(use-package apheleia :ensure t)
+;;  (setup (:pkg apheleia)
+;;      (apheleia-global-mode +1)
+
+(use-package company
+      :after lsp-mode
+      :hook (lsp-mode . company-mode)
+      :bind (:map company-active-map
+	     ("<tab>" . company-complete-selection))
+	    (:map lsp-mode-map
+	     ("<tab>". company-indent-or-complete-common))
+      :custom
+      (company-minimum-prefix-length 1)
+      (company-idle-delay 0.0))
+
+    (use-package company-box
+      :hook (company-mode . company-box-mode))
+
+(defun my-web-mode-hook ()
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files))
+)
 
 (use-package lsp-java
 :config
