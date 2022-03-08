@@ -44,6 +44,10 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 (use-package general
   :ensure t
   :config
@@ -58,39 +62,69 @@
     :prefix "C-c")
   )
 
+(use-package undo-tree
+   :init
+   (setq undo-tree-auto-save-history nil)
+   (global-undo-tree-mode 1))
+  (use-package evil
+   :init
+   (setq evil-want-integration t)
+   (setq evil-want-keybinding nil)
+   (setq evil-want-C-u-scroll t)
+   (setq evil-want-C-i-jump nil)
+   (setq evil-respect-visual-line-mode t)
+   (setq evil-undo-system 'undo-tree)
+   :config
+   (evil-mode 1)
+   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+;; use visual line motions even ouside of visual-line-mode buffers
+(evil-global-set-key 'motion "j" 'evil-next-visual-line)
+(evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+(evil-set-initial-state 'messages-buffer-mode 'normal)
+(evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package evil-collection
+   :init
+   :after evil
+   :config
+   (evil-collection-init))
+
 ;;  (set-face-attribute 'default nil
-;;	    :font "FiraCode Nerd Font 11"
-;;	    :weight 'medium)
-;;  (set-face-attribute 'variable-pitch nil
-;;	    :font "FiraCode Nerd Font 11"
-;;	    :weight 'medium)
-;;  (set-face-attribute 'fixed-pitch nil
-;;	    :font "Iosevka Aile"
-;;	    :weight 'regular)
+   ;;	    :font "FiraCode Nerd Font 11"
+   ;;	    :weight 'medium)
+   ;;  (set-face-attribute 'variable-pitch nil
+   ;;	    :font "FiraCode Nerd Font 11"
+   ;;	    :weight 'medium)
+   ;;  (set-face-attribute 'fixed-pitch nil
+   ;;	    :font "Iosevka Aile"
+   ;;	    :weight 'regular)
 
-  ;;(setq-default line-spacing 0.10)
+     ;;(setq-default line-spacing 0.10)
 
-  ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
-  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))
+     ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
+     (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))  ;;actually firacode retina
+;; (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
 
-
-(set-face-attribute 'default nil
+   (set-face-attribute 'default nil
+			  :font "JetBrains Mono"
+			  :weight 'medium
+			 ;;  :height 110
+   )
+   ;; Set the fixed pitch face
+   (set-face-attribute 'fixed-pitch nil
 		       :font "JetBrains Mono"
 		       :weight 'medium
-		      ;;  :height 110
-)
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil
-		    :font "JetBrains Mono"
-		    :weight 'medium
-		  ;;  :height 110
-)
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil
-		    ;; :font "Cantarell"
-		    :font "Iosevka Aile"
-		  ;;  :height 120
-		    :weight 'medium)
+		     ;;  :height 110
+   )
+   ;; Set the variable pitch face
+   (set-face-attribute 'variable-pitch nil
+		       ;; :font "Cantarell"
+		       :font "Iosevka Aile"
+		     ;;    :font "JetBrains Mono"
+		     ;;  :height 120
+		       :weight 'medium)
 
 (use-package command-log-mode
 :commands command-log-mode)
@@ -123,37 +157,21 @@
   "pc"  'projectile-compile-project
   "pd"  'projectile-dired)
 
-(use-package dashboard
-       :ensure t
-       :init
-       (progn
-	 (setq dashboard-items '((recents . 5)
-				 (agenda . 5)
-				 (bookmarks . 3)
-				 (projects . 3)
-				 (registers . 3)))
-	 (setq dashboard-set-heading-icons t)
-	 (setq dashboard-set-file-icons t)
-	 (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
-         ;; (setq dashboard-set-navigator t)
-;;	 (setq dahsboard-startup-banner "  c:/Users/Patta/AppData/Roaming/.emacs.d/emacs-logo-transparent.png")
-(setq dashboard-startup-banner "~/.emacs.d/emacs-logo-transparent.png")
- (setq dashboard-center-content nil)
-	 )
-       :config
-       (dashboard-setup-startup-hook))
-
 ;; zoom in/out like we do everywhere else.
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 ;;
 
-;;(menu-bar-mode -1)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
 (global-display-line-numbers-mode 1)
-(global-visual-line-mode t)
+  (global-visual-line-mode t)
+
+;; Override some modes which derive from the above
+(dolist (mode '(org-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package doom-themes
      :ensure t)
@@ -248,6 +266,7 @@
 (add-to-list 'org-structure-template-alist '("go" . "src go"))
 (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
 (add-to-list 'org-structure-template-alist '("json" . "src json"))
+(add-to-list 'org-structure-template-alist '("css" . "src css"))
 )
 
 (setq org-src-fontify-natively t
@@ -324,6 +343,14 @@
         org-tree-slide-activate-message "Presentation started."
         org-tree-slide-deactivate-message "Presentation ended."
         org-tree-slide-header t))
+
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
 
 (use-package eshell-syntax-highlighting
   :ensure t
@@ -691,17 +718,21 @@
          typescript-mode
          js2-mode))
 
-;;  (use-package magit			
-;;  :ensure t
-;;   :commands magit-status
-;;  :custom
-;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(use-package magit			
+  :ensure t
+   :commands magit-status
+  :custom
+ (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; NOTE: Make sure to configure a GitHub token before using this package!
 ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
   ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
 ;;  (use-package forge
 ;;   :after magit)
+;;(setup (:pkg magit)
+;;  (:also-load magit-todos)
+;;  (:global "C-M-;" magit-status)
+;;  (:option magit-display-buffer-function ;;#'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package elfeed
   :commands elfeed
@@ -732,6 +763,8 @@
 
 (dw/leader-key-def
   "cc"  '(cfw:open-org-calendar :which-key "calendar"))
+
+
 
 ;;Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))

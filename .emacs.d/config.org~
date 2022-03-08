@@ -83,6 +83,22 @@ You can also use ~M-x auto-package-update-now~ to update right now!
 (set-terminal-coding-system 'utf-8)
    #+end_src
 
+
+
+** Keyboard Configurations
+*** ESC cancels all
+    #+begin_src emacs-lisp
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+    #+end_src
+*** Rebind C-u
+    Since I let =evil-mode= take over =C-u= for buffer scrolling, I need to rebind the =universal-argument= command to another key sequence. I'm choosing =C-M-u= for this purpose.
+    #+begin_src emacs-lisp
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    #+end_src
+
+
 ** General Keybindings
 [[https://github.com/noctuid/general.el][General.el]] allows us to set keybindings.  As a longtime Doom Emacs user, I have grown accustomed to using SPC as the prefix key.  General makes setting keybindings (especially with SPC) much easier.  All of the keybindings we set later in the config depend on general being loaded.
 
@@ -103,43 +119,76 @@ You can also use ~M-x auto-package-update-now~ to update right now!
 #+end_src
 
   
+** EVIL
+   #+begin_src emacs-lisp
+     (use-package undo-tree
+      :init
+      (setq undo-tree-auto-save-history nil)
+      (global-undo-tree-mode 1))
+     (use-package evil
+      :init
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      (setq evil-want-C-u-scroll t)
+      (setq evil-want-C-i-jump nil)
+      (setq evil-respect-visual-line-mode t)
+      (setq evil-undo-system 'undo-tree)
+      :config
+      (evil-mode 1)
+      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+   ;; use visual line motions even ouside of visual-line-mode buffers
+   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+   (evil-set-initial-state 'messages-buffer-mode 'normal)
+   (evil-set-initial-state 'dashboard-mode 'normal))
+
+   (use-package evil-collection
+      :init
+      (setq evil-collection-company-use-tng nil)
+      :after evil
+      :config
+      (evil-collection-init))
+   #+end_src
 * FONTS
   I am using the Fira Code and Cantarell fonts for this configuration which will more than likely need to be installed on your machine. Both can usually be found in teh various Linux distro package managers or dowloaded from the below links. Here FiraCode Nerd Font refers to the Retina font face of the fira code font. And I'm using it on Windows.
 [[https://github.com/tonsky/FiraCode][Fira Code Retina]] 
   #+begin_src emacs-lisp
-  ;;  (set-face-attribute 'default nil
-  ;;	    :font "FiraCode Nerd Font 11"
-  ;;	    :weight 'medium)
-  ;;  (set-face-attribute 'variable-pitch nil
-  ;;	    :font "FiraCode Nerd Font 11"
-  ;;	    :weight 'medium)
-  ;;  (set-face-attribute 'fixed-pitch nil
-  ;;	    :font "Iosevka Aile"
-  ;;	    :weight 'regular)
+    ;;  (set-face-attribute 'default nil
+    ;;	    :font "FiraCode Nerd Font 11"
+    ;;	    :weight 'medium)
+    ;;  (set-face-attribute 'variable-pitch nil
+    ;;	    :font "FiraCode Nerd Font 11"
+    ;;	    :weight 'medium)
+    ;;  (set-face-attribute 'fixed-pitch nil
+    ;;	    :font "Iosevka Aile"
+    ;;	    :weight 'regular)
 
-    ;;(setq-default line-spacing 0.10)
+      ;;(setq-default line-spacing 0.10)
 
-    ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
-    (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))
+      ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
+      (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))  ;;actually firacode retina
+ ;; (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
 
-
-  (set-face-attribute 'default nil
-			 :font "JetBrains Mono"
-			 :weight 'medium
-			;;  :height 110
-  )
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil
-		      :font "JetBrains Mono"
-		      :weight 'medium
-		    ;;  :height 110
-  )
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil
-		      ;; :font "Cantarell"
-		      :font "Iosevka Aile"
-		    ;;  :height 120
-		      :weight 'medium)
+    (set-face-attribute 'default nil
+			   :font "JetBrains Mono"
+			   :weight 'medium
+			  ;;  :height 110
+    )
+    ;; Set the fixed pitch face
+    (set-face-attribute 'fixed-pitch nil
+			:font "JetBrains Mono"
+			:weight 'medium
+		      ;;  :height 110
+    )
+    ;; Set the variable pitch face
+    (set-face-attribute 'variable-pitch nil
+			;; :font "Cantarell"
+		        :font "Iosevka Aile"
+		      ;;    :font "JetBrains Mono"
+		      ;;  :height 120
+			:weight 'medium)
 #+end_src
 
 * BUFFER And BOOKMARKS Keybindigs set
@@ -201,8 +250,8 @@ But in linux, it is so easy. You don't need to manually install fonts. It instal
  not in need now..
 
 ** Dashboard Code
-   After writing this code just save it and load-file ~/.emacs.d/init.el file. Theen create a new buffer by C-x b named as *dashboard* and refresh that buffer with the command M-x dashboard-refresh-buffer. Then you can see all your customized dashboard. That's it. Nothing else you have to do. ENJOY!
-   #+begin_src emacs-lisp
+#   After writing this code just save it and load-file ~/.emacs.d/init.el file. Theen create a new buffer by C-x b named as *dashboard* and refresh that buffer with the command M-x dashboard-refresh-buffer. Then you can see all your customized dashboard. That's it. Nothing else you have to do. ENJOY!
+ ##  #+begin_src emacs-lisp
      (use-package dashboard
        :ensure t
        :init
@@ -222,7 +271,7 @@ But in linux, it is so easy. You don't need to manually install fonts. It instal
 	 )
        :config
        (dashboard-setup-startup-hook))
-   #+end_src
+ ##  #+end_src
 * Zooming IN and OUT
 You can use the bindings CTRL plus =/- for zooming in/out. You can also use CTRL plus
 the mouse scroll for zooming in and out.
@@ -239,7 +288,7 @@ the mouse scroll for zooming in and out.
 
 ** Disable Menu, Tool and scroll bar
   #+begin_src emacs-lisp
-  ;;(menu-bar-mode -1)
+  (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   #+end_src
@@ -248,6 +297,12 @@ the mouse scroll for zooming in and out.
   #+begin_src emacs-lisp
   (global-display-line-numbers-mode 1)
   (global-visual-line-mode t)
+
+;; Override some modes which derive from the above
+(dolist (mode '(org-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+
   #+end_src
 
 
@@ -405,6 +460,7 @@ You can add more src block templates below by copying one of the lines and chang
 (add-to-list 'org-structure-template-alist '("go" . "src go"))
 (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
 (add-to-list 'org-structure-template-alist '("json" . "src json"))
+(add-to-list 'org-structure-template-alist '("css" . "src css"))
 )
 
 #+end_src
@@ -510,19 +566,18 @@ We want the same syntax highlighting in source blocks as in the native language 
 
 ** Center Org Buffers
    We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]] to center =org-mode= buffers for a more pleasing writing experience as it centers the contents of the buffer horizontally to seem more like you are editing a document. This is really a matter of personal preference so you can remove the block below if you don't like the behavior.
-   I don't personally don't like it. But still I want to include the code.
- ;;  #+begin_src emacs-lisp
+   
+  #+begin_src emacs-lisp
 
-;;(defun efs/org-mode-visual-fill ()
-;;  (setq visual-fill-column-width 100
-;;        visual-fill-column-center-text t)
-;;  (visual-fill-column-mode 1))
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
-;;(use-package visual-fill-column
-;;  :hook (org-mode . efs/org-mode-visual-fill))
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
 
-
- ;;  #+end_src
+  #+end_src
 
 * SHELLS WITHIN EMACS
 
@@ -903,7 +958,7 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 (use-package impatient-mode :ensure t)
 (use-package skewer-mode :ensure t)
 
-(add-hook 'web-mode-hook  'emmet-mode) 
+;;(add-hook 'web-mode-hook  'emmet-mode) 
     #+end_src
 
 *** JavaScript & TypeScript
@@ -1028,18 +1083,21 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
   [[https://magit.vc/][Magit]] is the best Git interfac in this world. Common Git operations are easy to execute quickly using Magit’s command panel system.
   #+begin_src emacs-lisp
 
-;;  (use-package magit			
-;;  :ensure t
-;;   :commands magit-status
-;;  :custom
-;; (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  (use-package magit			
+  :ensure t
+   :commands magit-status
+  :custom
+ (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; NOTE: Make sure to configure a GitHub token before using this package!
 ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
   ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
 ;;  (use-package forge
 ;;   :after magit)
-
+;;(setup (:pkg magit)
+;;  (:also-load magit-todos)
+;;  (:global "C-M-;" magit-status)
+;;  (:option magit-display-buffer-function ;;#'magit-display-buffer-same-window-except-diff-v1))
 
   #+end_src
   
@@ -1085,7 +1143,10 @@ Vterm is a terminal emulator within Emacs. The 'shell-file-name' settings sets t
 
   #+end_src
 
-* 
+* MIT-SCHME geiser implementation
+  #+begin_src emacs-lisp
+    
+  #+end_src
 
 * LAST: RUNTIME PERFORMANCE
   Dial the GC threshold back down so that garbage collection happends more frequently but in less time.
