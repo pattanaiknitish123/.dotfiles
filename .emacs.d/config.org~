@@ -146,7 +146,6 @@ You can also use ~M-x auto-package-update-now~ to update right now!
 
    (use-package evil-collection
       :init
-      (setq evil-collection-company-use-tng nil)
       :after evil
       :config
       (evil-collection-init))
@@ -168,7 +167,7 @@ You can also use ~M-x auto-package-update-now~ to update right now!
       ;;(setq-default line-spacing 0.10)
 
       ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
-      (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))  ;;actually firacode retina
+      (add-to-list 'default-frame-alist '(font . "Iosevka Term 11"))  ;;actually firacode retina
  ;; (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
 
     (set-face-attribute 'default nil

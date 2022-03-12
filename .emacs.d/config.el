@@ -104,7 +104,7 @@
      ;;(setq-default line-spacing 0.10)
 
      ;; Needed if using emacsclient, Otherwise, your fonts will be smaller tha expected.
-     (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 11"))  ;;actually firacode retina
+     (add-to-list 'default-frame-alist '(font . "Iosevka Aile 11"))  ;;actually firacode retina
 ;; (add-to-list 'default-frame-alist '(font . "JetBrains Mono"))
 
    (set-face-attribute 'default nil
