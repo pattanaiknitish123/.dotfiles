@@ -267,6 +267,7 @@
 (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
 (add-to-list 'org-structure-template-alist '("json" . "src json"))
 (add-to-list 'org-structure-template-alist '("css" . "src css"))
+(add-to-list 'org-structure-template-alist '("js" . "src javascript"))
 )
 
 (setq org-src-fontify-natively t

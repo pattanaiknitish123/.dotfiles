@@ -460,6 +460,7 @@ You can add more src block templates below by copying one of the lines and chang
 (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
 (add-to-list 'org-structure-template-alist '("json" . "src json"))
 (add-to-list 'org-structure-template-alist '("css" . "src css"))
+(add-to-list 'org-structure-template-alist '("js" . "src javascript"))
 )
 
 #+end_src
