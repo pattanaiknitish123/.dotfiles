@@ -11,8 +11,10 @@ window:
   
   startup_mode: Windowed
 scrolling:
-  history: 0
+  history: 10000
   multiplier: 3
+  faux_multiplier: 3
+  auto_scroll: false
 
 font:
   normal:
@@ -24,7 +26,7 @@ font:
   italic:
     family: "JetBrains Mono"
     style: "Light Italic"
-  size: 12.0
+  size: 11.0
   offset:
     x: 0
     y: 0
@@ -34,36 +36,64 @@ font:
   use_thin_strokes: true
 custom_curosr_colors: true
 draw_bold_text_with_bright_colors: true
-colors:
-  primary:
-    background: '#282c34'
-    foreground: '#bbc2cf'
-  cursor:
-    text: CellBackground
-    cursor: '#528bff'
-  selection:
-    text: CellForeground
-    background: '#3e4451'
-  normal:
-    black:   '#1c1f24'
-    red:     '#ff6c6b'
-    green:   '#98be65'
-    yellow:  '#da8548'
-    blue:    '#51afef'
-    magenta: '#c678dd'
-    cyan:    '#5699af'
-    white:   '#202328'
-  bright:
-    black:   '#5b6268'
-    red:     '#da8548'
-    green:   '#4db5bd'
-    yellow:  '#ecbe7b'
-    blue:    '#3071db'   # This is 2257a0 in Doom Emacs but I lightened it.
-    magenta: '#a9a1e1'
-    cyan:    '#46d9ff'
-    white:   '#dfdfdf'
-
-  
-  
+  #github dark color scheme
 
 window_opacity: 1.0
+# Colors (Monokai Remastered)
+#colors:
+#  bright:
+#    black: '#625e4c'
+#    blue: '#9d65ff'
+#    cyan: '#58d1eb'
+#    green: '#98e024'
+#    magenta: '#f4005f'
+#    red: '#f4005f'
+#    white: '#f6f6ef'
+#    yellow: '#e0d561'
+#  cursor:
+#    cursor: '#fc971f'
+#    text: '#000000'
+#  normal:
+#    black: '#1a1a1a'
+#    blue: '#9d65ff'
+#    cyan: '#58d1eb'
+#    green: '#98e024'
+#    magenta: '#f4005f'
+#    red: '#f4005f'
+#    white: '#c4c5b5'
+#    yellow: '#fd971f'
+#  primary:
+#    background: '#0c0c0c'
+#    foreground: '#d9d9d9'
+#  selection:
+#    background: '#343434'
+#    text: '#ffffff'
+# Colors (Tomorrow Night Bright)
+colors:
+  bright:
+    black: '#000000'
+    blue: '#7aa6da'
+    cyan: '#70c0b1'
+    green: '#b9ca4a'
+    magenta: '#c397d8'
+    red: '#d54e53'
+    white: '#ffffff'
+    yellow: '#e7c547'
+  cursor:
+    cursor: '#eaeaea'
+    text: '#000000'
+  normal:
+    black: '#000000'
+    blue: '#7aa6da'
+    cyan: '#70c0b1'
+    green: '#b9ca4a'
+    magenta: '#c397d8'
+    red: '#d54e53'
+    white: '#ffffff'
+    yellow: '#e7c547'
+  primary:
+    background: '#000000'
+    foreground: '#eaeaea'
+  selection:
+    background: '#424242'
+    text: '#eaeaea'
