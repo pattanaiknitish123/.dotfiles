@@ -1,4 +1,4 @@
-set nocompatible
+"set nocompatible       "default always enabled
 filetype indent on      "default on
 syntax on               "default on
 
@@ -9,7 +9,7 @@ set nobackup
 set noswapfile
 set undodir=~/.local/state/nvim/undo/   "default enabled...same
 
-set t_Co=256
+"set t_Co=256           "default enabled
 
 set wildmenu            "default on
 set showcmd             "default on
@@ -26,8 +26,8 @@ set smartindent
 set ruler               "default on
 set confirm
 set noerrorbells
-set t_vb=
-set cmdheight=2
+"set t_vb=
+"set cmdheight=2
 set number
 set laststatus=0
 
