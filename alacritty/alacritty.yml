@@ -1,5 +1,7 @@
 env:
   TERM: xterm-256color
+shell:
+  program: ubuntu
 window:
   dimensions:
        columns: 125
@@ -18,13 +20,13 @@ scrolling:
 
 font:
   normal:
-    family: "JetBrains Mono"
+    family: "SF Mono"
     style: Medium
   bold:
-    family: "JetBrains Mono"
+    family: "SF Mono"
     style: Bold
   italic:
-    family: "JetBrains Mono"
+    family: "SF Mono"
     style: "Light Italic"
   size: 11.0
   offset:
@@ -69,31 +71,61 @@ window_opacity: 1.0
 #    background: '#343434'
 #    text: '#ffffff'
 # Colors (Tomorrow Night Bright)
+#colors:
+#  bright:
+#    black: '#000000'
+#    blue: '#7aa6da'
+#    cyan: '#70c0b1'
+#    green: '#b9ca4a'
+#    magenta: '#c397d8'
+#    red: '#d54e53'
+#    white: '#ffffff'
+#    yellow: '#e7c547'
+#  cursor:
+#    cursor: '#eaeaea'
+#    text: '#000000'
+#  normal:
+#    black: '#000000'
+#    blue: '#7aa6da'
+#    cyan: '#70c0b1'
+#    green: '#b9ca4a'
+#    magenta: '#c397d8'
+#    red: '#d54e53'
+#    white: '#ffffff'
+#    yellow: '#e7c547'
+#  primary:
+#    background: '#000000'
+#    foreground: '#eaeaea'
+#  selection:
+#    background: '#424242'
+#    text: '#eaeaea'
+
+# Colors (Tango Dark Windows Terminal theme)
 colors:
   bright:
-    black: '#000000'
-    blue: '#7aa6da'
-    cyan: '#70c0b1'
-    green: '#b9ca4a'
-    magenta: '#c397d8'
-    red: '#d54e53'
-    white: '#ffffff'
-    yellow: '#e7c547'
+    black: '#555753'
+    blue: '#729FCF'
+    cyan: '#34E2E2'
+    green: '#8AE234'
+    magenta: '#AD7FA8'
+    red: '#EF2929'
+    white: '#EEEEEC'
+    yellow: '#FCE94F'
   cursor:
     cursor: '#eaeaea'
     text: '#000000'
   normal:
     black: '#000000'
-    blue: '#7aa6da'
-    cyan: '#70c0b1'
-    green: '#b9ca4a'
-    magenta: '#c397d8'
-    red: '#d54e53'
-    white: '#ffffff'
-    yellow: '#e7c547'
+    blue: '#3465A4'
+    cyan: '#06989A'
+    green: '#4E9A06'
+    magenta: '#75507B'
+    red: '#CC0000'
+    white: '#FFFFFD'
+    yellow: '#C4A000'
   primary:
     background: '#000000'
-    foreground: '#eaeaea'
+    foreground: '#FFFFFD'
   selection:
-    background: '#424242'
+    background: '#FFFFFF'
     text: '#eaeaea'
