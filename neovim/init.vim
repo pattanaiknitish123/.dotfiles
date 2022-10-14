@@ -1,4 +1,4 @@
-let mapleader = ","
+filetype indent on
 
 set scrolloff=8
 set nobackup 
@@ -21,7 +21,6 @@ set expandtab
 set tabstop=8
 set shiftwidth=4
 set softtabstop=4
-set smarttab
 set clipboard+=unnamedplus
 
 "encoding=utf-8
@@ -38,6 +37,12 @@ set clipboard+=unnamedplus
 
 set title 
 set mouse=a
+
+"remap keys
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 "Emulate GeorgeHotz ColorScheme But with default.vim
 colorscheme default
