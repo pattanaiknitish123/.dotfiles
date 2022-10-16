@@ -2,96 +2,95 @@
 #+AUTHOR: Nitish Kumar Pattanaik
 #+DESCRIPTION: things to to with windows 11 after installing a fresh one.
 
-THINGS TO DO[Windows 11]
-============
-* Wallpaper
+** THINGS TO DO[Windows 11]
+
+
+*** Theme and Personalization
+**** Wallpaper
   Choose wallpaper from my personal wallpapers git repo
-    
-
-* Theme and personalization
-** Theme
+**** Theme
    Default
-** Accent color
+**** Accent color
    Default
-
-** Transparency
+**** Transparency
    Default
-** LockScreen
+**** LockScreen
    Default
-** icons
+**** icons
    Default
-** HOME SCREEN
+**** HOME SCREEN
    Hide all the software links from the desktop
    Desktop should be clean
    
-** Fonts
-   Default MS font is more than enough
-*** Download Other fonts
-    SF Mono [use with alacritty terminal]
-    JetBrains Mono [Default font for coding]
-    Cascadia Code| Mono PL [Default font for windows terminal]
+*** Fonts
+  - Default MS font is more than enough
+**** Download Other fonts
+   - SF Mono [use with alacritty terminal]
+   - JetBrains Mono [Default font for coding]
+   - Cascadia Code| Mono PL [Default font for windows terminal]
 
-* Developer Mode
-  On developer mode and on all the developer features
+*** Developer Mode
+   - On developer mode and on all the developer features
 
-* Don't sync any kind of data to microsoft
+*** Don't sync any kind of data to microsoft
 
-* Cut down OneDrive from the system
-  one drive makes window startup process longer
-  uninstall onedrive and related services
 
-* Microsoft Office
-** Use free version
-** Don't use official paid version
-** Use LibreOffice instead
-   Libreoffice is great replacement for the microsoft office
+*** Cut down OneDrive from the system
+   - one drive makes window startup process longer
+   - uninstall onedrive and related services
 
-* Make VLC your default video  player
+*** Microsoft Office
+ - Use free version
+ - Don't use official paid version
+ - Use LibreOffice instead
+   (Libreoffice is great replacement for the microsoft office)
 
-* Turn on all the hidden features of the operating system
+*** Make VLC your default video  player
+
+*** Turn on all the hidden features of the operating system
   Turn on all hidden tools
 
-* PowerToys
+*** PowerToys
   Install powertoys to get additional functionalities
 
-* Change CapsLock with Ctrl Key [for emacs using powertoy]
+*** Change CapsLock with Ctrl Key [for emacs using powertoy]
   
-* Change CapsLock with Esc [for neovim,vim]
+*** Change CapsLock with Esc [for neovim,vim]
 
-* turn off the windows bell sound -Through regedit
+*** turn off the windows bell sound -Through regedit
 
-* Make Night Light On always
+*** Make Night Light On always
 
-* Install winget
+*** Install winget
   Through github
-* Install windows terminal Preview
+*** Install windows terminal Preview
   Through winget
-* Install WSL Ubuntu
+*** Install WSL Ubuntu
   Through Microsoft store
-* Install Firefox developer edition web browser
+*** Install Firefox developer edition web browser
   Make it your default browser
-* Install Chrome [it's secure, robust feeling]
-* Microsoft Edge browser [for pdf viewer]
-* Installl PowerShell Preview  Latest edition
+*** Install Chrome [it's secure, robust feeling]
+*** Microsoft Edge browser [for pdf viewer]
+*** Installl PowerShell Preview  Latest edition
   Through winget
-* Install .Net framework
+*** Install .Net framework
   Through winget
-* Install VS Code
+*** Install VS Code
   through winget
-* Install Emacs on WSL [not on windows ]
+*** Install Emacs on WSL [not on windows ]
   Make your own emacs configuration and pushed it to your github or gitlab repo
 
-* Install Alacritty[configure using personal .dotfile/alacritty/alacritty.yml]
+*** Install Alacritty[configure using personal .dotfile/alacritty/alacritty.yml]
   through winget
   Make your own alacritty config and pushed it to your git repo
 
-* Install Python and java environment
+*** Install Python and java environment
 
-* Install Git on you system
+*** Install Git on you system
   latest version of the git
 
-* Use Tango Dark theme in every terminal
+*** Use Tango Dark theme in every terminal
 
-* windows neovim and WSL neovim configure with personal config file
+*** windows neovim and WSL neovim configure with personal config file
 
 
