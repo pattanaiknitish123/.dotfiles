@@ -1,0 +1,131 @@
+env:
+  TERM: xterm-256color
+shell:
+  program: ubuntu
+window:
+  dimensions:
+       columns: 125
+       lines: 35
+  paddings:
+       x: 6
+       y: 6
+  title: Alacritty
+  
+  startup_mode: Windowed
+scrolling:
+  history: 10000
+  multiplier: 3
+  faux_multiplier: 3
+  auto_scroll: false
+
+font:
+  normal:
+    family: "SF Mono"
+    style: Medium
+  bold:
+    family: "SF Mono"
+    style: Bold
+  italic:
+    family: "SF Mono"
+    style: "Light Italic"
+  size: 11.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  use_thin_strokes: true
+custom_curosr_colors: true
+draw_bold_text_with_bright_colors: true
+  #github dark color scheme
+
+window_opacity: 1.0
+# Colors (Monokai Remastered)
+#colors:
+#  bright:
+#    black: '#625e4c'
+#    blue: '#9d65ff'
+#    cyan: '#58d1eb'
+#    green: '#98e024'
+#    magenta: '#f4005f'
+#    red: '#f4005f'
+#    white: '#f6f6ef'
+#    yellow: '#e0d561'
+#  cursor:
+#    cursor: '#fc971f'
+#    text: '#000000'
+#  normal:
+#    black: '#1a1a1a'
+#    blue: '#9d65ff'
+#    cyan: '#58d1eb'
+#    green: '#98e024'
+#    magenta: '#f4005f'
+#    red: '#f4005f'
+#    white: '#c4c5b5'
+#    yellow: '#fd971f'
+#  primary:
+#    background: '#0c0c0c'
+#    foreground: '#d9d9d9'
+#  selection:
+#    background: '#343434'
+#    text: '#ffffff'
+# Colors (Tomorrow Night Bright)
+#colors:
+#  bright:
+#    black: '#000000'
+#    blue: '#7aa6da'
+#    cyan: '#70c0b1'
+#    green: '#b9ca4a'
+#    magenta: '#c397d8'
+#    red: '#d54e53'
+#    white: '#ffffff'
+#    yellow: '#e7c547'
+#  cursor:
+#    cursor: '#eaeaea'
+#    text: '#000000'
+#  normal:
+#    black: '#000000'
+#    blue: '#7aa6da'
+#    cyan: '#70c0b1'
+#    green: '#b9ca4a'
+#    magenta: '#c397d8'
+#    red: '#d54e53'
+#    white: '#ffffff'
+#    yellow: '#e7c547'
+#  primary:
+#    background: '#000000'
+#    foreground: '#eaeaea'
+#  selection:
+#    background: '#424242'
+#    text: '#eaeaea'
+
+# Colors (Tango Dark Windows Terminal theme)
+colors:
+  bright:
+    black: '#555753'
+    blue: '#729FCF'
+    cyan: '#34E2E2'
+    green: '#8AE234'
+    magenta: '#AD7FA8'
+    red: '#EF2929'
+    white: '#EEEEEC'
+    yellow: '#FCE94F'
+  cursor:
+    cursor: '#eaeaea'
+    text: '#000000'
+  normal:
+    black: '#000000'
+    blue: '#3465A4'
+    cyan: '#06989A'
+    green: '#4E9A06'
+    magenta: '#75507B'
+    red: '#CC0000'
+    white: '#FFFFFD'
+    yellow: '#C4A000'
+  primary:
+    background: '#000000'
+    foreground: '#FFFFFD'
+  selection:
+    background: '#FFFFFF'
+    text: '#eaeaea'

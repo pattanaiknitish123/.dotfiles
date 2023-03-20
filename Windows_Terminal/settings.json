@@ -1,3 +1,4 @@
+
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
@@ -33,10 +34,17 @@
         }
     ],
     "alwaysShowNotificationIcon": false,
+    "alwaysShowTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
     "language": "en-US",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -70,11 +78,11 @@
             },
             {
                 "adjustIndistinguishableColors": "always",
-                "colorScheme": "Tango Dark",
+                "colorScheme": "Tango Dark mod",
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "Cascadia Code PL",
+                    "face": "Hack",
                     "size": 10.0,
                     "weight": "normal"
                 },
@@ -113,21 +121,23 @@
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": true,
                 "name": "Ubuntu",
-                "source": "Windows.Terminal.Wsl"
+                "source": "Windows.Terminal.Wsl",
+                "useAcrylic": true
             },
             {
                 "adjustIndistinguishableColors": "indexed",
-                "colorScheme": "Tango Dark",
+                "colorScheme": "standard-ansi-16_mod",
                 "cursorShape": "filledBox",
                 "font": 
                 {
-                    "face": "Cascadia Mono PL",
-                    "size": 11.0
+                    "face": "JetBrains Mono NL",
+                    "size": 10.0
                 },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu",
-                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
+                "useAcrylic": true
             }
         ]
     },
@@ -201,29 +211,6 @@
             "selectionBackground": "#3B5070",
             "white": "#FFFFFF",
             "yellow": "#E3B341"
-        },
-        {
-            "background": "#1E1E1E",
-            "black": "#1E1E1E",
-            "blue": "#377375",
-            "brightBlack": "#7F7061",
-            "brightBlue": "#719586",
-            "brightCyan": "#7DB669",
-            "brightGreen": "#AAB01E",
-            "brightPurple": "#C77089",
-            "brightRed": "#F73028",
-            "brightWhite": "#E6D4A3",
-            "brightYellow": "#F7B125",
-            "cursorColor": "#E6D4A3",
-            "cyan": "#578E57",
-            "foreground": "#E6D4A3",
-            "green": "#868715",
-            "name": "Gruvbox Dark",
-            "purple": "#A04B73",
-            "red": "#BE0F17",
-            "selectionBackground": "#E6D4A3",
-            "white": "#978771",
-            "yellow": "#CC881A"
         },
         {
             "background": "#202020",
@@ -477,9 +464,32 @@
             "selectionBackground": "#FFFFFF",
             "white": "#C0C0C0",
             "yellow": "#808000"
+        },
+        {
+            "background": "#000000",
+            "black": "#000000",
+            "blue": "#000080",
+            "brightBlack": "#808080",
+            "brightBlue": "#0000FF",
+            "brightCyan": "#00FFFF",
+            "brightGreen": "#00FF00",
+            "brightPurple": "#FF00FF",
+            "brightRed": "#FF0000",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFFF00",
+            "cursorColor": "#FAEBD7",
+            "cyan": "#008080",
+            "foreground": "#FAEBD7",
+            "green": "#008000",
+            "name": "standard-ansi-16_mod",
+            "purple": "#800080",
+            "red": "#800000",
+            "selectionBackground": "#3465A4",
+            "white": "#C0C0C0",
+            "yellow": "#808000"
         }
     ],
-    "showTabsInTitlebar": true,
+    "showTabsInTitlebar": false,
     "startOnUserLogin": true,
     "theme": "dark",
     "themes": [],

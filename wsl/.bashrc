@@ -57,7 +57,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@:\[\033[38;5;27m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -85,12 +86,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alFinsoh'
-alias la='ls -A'
-alias l='ls -CF'
+#alias ll='ls -alFinsoh'
+#alias la='ls -A'
+#alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -116,5 +117,41 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+#-----CUSTOMIZATION-------#
+#==========================
 #colorize man pages
-export MANPAGER="less -R --use-color -Dd+r -Du+b"
+#export MANPAGER="less -R --use-color -Dd+r -Du+b"  #4bit method
+export MANPAGER="less -R --use-color -Dd+r -Du+c"
+
+# 8bit setting -> "\e[38;5;nm" -> foreground(256colors - 8bit depth)
+# 8bit setting -> "\e[48;5;nm" -> background(256colors - 8bit depth) --refer to colors sections of 8bit inside wiki of ansi escape code page
+# n is  a number from the table shows for 8bit 256 colros in wikipedia page of ansi_escape_code
+
+#export LESS_TERMCAP_mb=$(printf "\e[1;31m")    # set bold text to red
+#export LESS_TERMCAP_md=$(printf "\e[1;36m")    # set highlighted text to cyan
+#export LESS_TERMCAP_me=$(printf "\e[0m")       # reset all text attributes
+#export LESS_TERMCAP_so=$(printf "\e[1;44;33m") # set standout mode to yellow on blue
+#export LESS_TERMCAP_se=$(printf "\e[0m")       # reset standout mode
+#export LESS_TERMCAP_us=$(printf "\e[1;32m")    # set underlined text to green
+#export LESS_TERMCAP_ue=$(printf "\e[0m")       # reset underlining
+
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+
+
+# di=01;34  -> 4bit blue
+# 8bit setting -> di=38;5;n -> foreground(256colors - 8bit depth)
+# 8bit setting -> di=48;5;n -> background(256colors - 8bit depth) --refer to colors sections of 8bit inside wiki of ansi escape code page
+export LS_COLORS="no=00:fi=00:di=38;5;33:ln=01;36:pi=01;33:so=01;35:do=01;35:bd=01;31:cd=01;31:or=01;36:ex=01;32:su=01;33;40:sg=01;30;43:tw=01;37;41:ow=01;31;40:st=01;37;44:"
+
+# For GNU Screen
+if [ "$TERM" = "screen" ] && [ "$HAS_256_COLORS" = "yes" ]
+    then
+        export TERM=screen-256color
+    fi
+
+
+export SCREENDIR=$HOME/.screen
+export COLORTERM=24bit

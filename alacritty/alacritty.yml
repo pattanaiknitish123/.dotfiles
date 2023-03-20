@@ -1,23 +1,33 @@
 env:
   TERM: xterm-256color
+
 shell:
   program: ubuntu
+
+# Windows Properties
 window:
   dimensions:
-       columns: 125
+       columns: 110
        lines: 35
   paddings:
-       x: 6
-       y: 6
-  title: Alacritty
-  
+       x: 0
+       y: 0
   startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: true
+
+# Scrolling  
 scrolling:
   history: 10000
   multiplier: 3
   faux_multiplier: 3
   auto_scroll: false
 
+# Save to clipboard
+selection:
+  save_to_clipboard: true
+
+# Font settings
 font:
   normal:
     family: "SF Mono"
@@ -28,79 +38,37 @@ font:
   italic:
     family: "SF Mono"
     style: "Light Italic"
-  size: 11.0
+  bold_italic:
+    family: "SF Mono"
+    style: Bold Italic
+  size: 10.0
   offset:
     x: 0
     y: 0
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: true
-custom_curosr_colors: true
+#  use_thin_strokes: true
+  AppleFontSmoothing: default
+
+# Cursor Style and Shape
+cursor:
+  style:
+    shape: Block
+    blinking: On
+  vi_mode_style: Block
+  blink_interval: 750
+  blink_timeout: 5
+  unfocused_hollow: true
+  thinkness: 0.15
+# ColorDomain:
+custom_cursor_colors: true
+
 draw_bold_text_with_bright_colors: true
-  #github dark color scheme
 
 window_opacity: 1.0
-# Colors (Monokai Remastered)
-#colors:
-#  bright:
-#    black: '#625e4c'
-#    blue: '#9d65ff'
-#    cyan: '#58d1eb'
-#    green: '#98e024'
-#    magenta: '#f4005f'
-#    red: '#f4005f'
-#    white: '#f6f6ef'
-#    yellow: '#e0d561'
-#  cursor:
-#    cursor: '#fc971f'
-#    text: '#000000'
-#  normal:
-#    black: '#1a1a1a'
-#    blue: '#9d65ff'
-#    cyan: '#58d1eb'
-#    green: '#98e024'
-#    magenta: '#f4005f'
-#    red: '#f4005f'
-#    white: '#c4c5b5'
-#    yellow: '#fd971f'
-#  primary:
-#    background: '#0c0c0c'
-#    foreground: '#d9d9d9'
-#  selection:
-#    background: '#343434'
-#    text: '#ffffff'
-# Colors (Tomorrow Night Bright)
-#colors:
-#  bright:
-#    black: '#000000'
-#    blue: '#7aa6da'
-#    cyan: '#70c0b1'
-#    green: '#b9ca4a'
-#    magenta: '#c397d8'
-#    red: '#d54e53'
-#    white: '#ffffff'
-#    yellow: '#e7c547'
-#  cursor:
-#    cursor: '#eaeaea'
-#    text: '#000000'
-#  normal:
-#    black: '#000000'
-#    blue: '#7aa6da'
-#    cyan: '#70c0b1'
-#    green: '#b9ca4a'
-#    magenta: '#c397d8'
-#    red: '#d54e53'
-#    white: '#ffffff'
-#    yellow: '#e7c547'
-#  primary:
-#    background: '#000000'
-#    foreground: '#eaeaea'
-#  selection:
-#    background: '#424242'
-#    text: '#eaeaea'
 
-# Colors (Tango Dark Windows Terminal theme)
+#ColorDomain: Color Schemes[Tango Dark: favorite]
 colors:
   bright:
     black: '#555753'
@@ -127,5 +95,30 @@ colors:
     background: '#000000'
     foreground: '#FFFFFD'
   selection:
-    background: '#FFFFFF'
+    background: '#8F8F8F'
     text: '#eaeaea'
+
+
+#ColorDomain: vi mode cursor colors
+vi_mode_cursor:
+  text: CellBackground
+  cursor: CellForeground
+
+# Seach colors
+search:
+  matches:
+    foreground: '#000000'
+    background: '#FFFFFF'
+  focused_match:
+    foreground: '#FFFFFF'
+    background: '#000000'
+
+# KeyBindings
+key_bindings:
+  - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
+  - { key: Return,   mods: Alt,           action: ToggleFullscreen }
+  - { key: N,        mods: Control,       action: SpawnNewInstance }
+mouse_bindings:
+  - { mouse: Right,                 action: PasteSelection }
+  - { mouse: Right,  mods: Control, action: ExpandSelection }
+  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
