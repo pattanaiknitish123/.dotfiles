@@ -1,16 +1,12 @@
-# 256 COLOR SUPPORT
-# By default, screen uses an 8-color terminal emulator. Use the
-# following line to enable more colors
-#term screen-256color
-#
-# Set terminfo and termcap for nice 256 color terminal
 # Allow bold colors - necessary for some reason
 attrcolor b ".I"
 
-# Tell screen how to set colors. AB = background, AF=foreground
-termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-#terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defnonblock 5
+termcapinfo vt100 dl=5\E[M
+termcapinfo xterm*|linux*|rxvt*|Eterm* OP
 
+# True color support
+termcapinfo screen 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 # Erase background with current bg color
 defbce "on"
 
@@ -31,27 +27,23 @@ hardstatus alwayslastline
 #george hotz default status
 hardstatus string '%{= kg}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%? %= %{g}][%{c} %m/%d %{W}%c %{g}]'
 
-defscrollback 50000
 #little bit modified to geohot
 #hardstatus string '%{= kg}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n%*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%? %= %{g}][%{c} %m/%d %{W}%c %{g}]'
 
 # Enable mouse scrolling
-#termcapinfo xterm* ti@:te@
+defscrollback 90000
+altscreen on
 
 # Set the log file location and name
 logfile $HOME/screenlogs/.screenlog_%Y%m%d_%H%M%S
 
 
-#true color support
-#termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
-#defbce "on"
-#term xterm-256color
-#attrcolor b ".I"
-#defbce on
+#terminal mouse scrolling
+termcapinfo xterm* ti@:te@
+termcapinfo xterm-color* ti@:te@
+termcapinfo xterm-256color* ti@:te@
+termcapinfo rxvt* ti@:te@
+termcapinfo rxvt-unicode* ti@:te@
+termcapinfo Eterm* ti@:te@
+termcapinfo putty* ti@:te@
 
-#term "xterm-256color"
-#term screen-256color
-
-#attrcolor b ".I"
-#termcapinfo xterm* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
-#defc1 off
