@@ -7,8 +7,8 @@ shell:
 # Windows Properties
 window:
   dimensions:
-       columns: 110
-       lines: 35
+       columns: 140
+       lines: 40
   paddings:
        x: 0
        y: 0
@@ -28,28 +28,53 @@ selection:
   save_to_clipboard: true
 
 # Font settings
+#font:
+#  normal:
+#    family: "Cascadia Mono"
+#    style: Regular
+#  bold:
+#    family: "Cascadia Mono"
+#    style: Bold
+#  italic:
+#    family: "Cascadia Mono"
+#    style: Light Italic
+#  bold_italic:
+#    family: "Cascadia Mono"
+#    style: Bold Italic
+#  size: 11
+#  offset:
+#    x: 0
+#    y: 0
+#  glyph_offset:
+#    x: 0
+#    y: 0
+      
+
 font:
   normal:
-    family: "SF Mono"
-    style: Medium
+    family: "Iosevka Term"
+    style: Medium Extended
   bold:
-    family: "SF Mono"
-    style: Bold
+    family: "Iosevka Term"
+    style: Bold Extended
   italic:
-    family: "SF Mono"
-    style: "Light Italic"
+    family: "Iosevka Term"
+    style: Light Extended Italic
   bold_italic:
-    family: "SF Mono"
-    style: Bold Italic
-  size: 10.0
+    family: "Iosevka Term"
+    style: Bold Extended Italic
+  size: 11
+  hinting: Full
+  antialias: Subpixel
   offset:
     x: 0
     y: 0
   glyph_offset:
     x: 0
     y: 0
+
 #  use_thin_strokes: true
-  AppleFontSmoothing: default
+#  AppleFontSmoothing: default
 
 # Cursor Style and Shape
 cursor:
@@ -69,34 +94,66 @@ draw_bold_text_with_bright_colors: true
 window_opacity: 1.0
 
 #ColorDomain: Color Schemes[Tango Dark: favorite]
+#colors:
+#  bright:
+#    black: '#555753'
+#    blue: '#729FCF'
+#    cyan: '#34E2E2'
+#    green: '#8AE234'
+#    magenta: '#AD7FA8'
+#    red: '#EF2929'
+#    white: '#EEEEEC'
+#    yellow: '#FCE94F'
+#  cursor:
+#    cursor: '#eaeaea'
+#    text: '#000000'
+#  normal:
+#    black: '#000000'
+#    blue: '#3465A4'
+#    cyan: '#06989A'
+#    green: '#4E9A06'
+#    magenta: '#75507B'
+#    red: '#CC0000'
+#    white: '#FFFFFD'
+#    yellow: '#C4A000'
+#  primary:
+#    background: '#000000'
+#    foreground: '#FFFFFD'
+#  selection:
+#    background: '#3465A4'
+#    text: '#eaeaea'
+# selection background: #8F8F8F  (previously)
+
+
 colors:
   bright:
-    black: '#555753'
-    blue: '#729FCF'
-    cyan: '#34E2E2'
-    green: '#8AE234'
-    magenta: '#AD7FA8'
-    red: '#EF2929'
-    white: '#EEEEEC'
-    yellow: '#FCE94F'
+    black: '#808080'
+    blue: '#0000FF'
+    cyan: '#00FFFF'
+    green: '#00FF00'
+    magenta: '#FF00FF'
+    red: '#FF0000'
+    white: '#FFFFFF'
+    yellow: '#FFFF00'
   cursor:
-    cursor: '#eaeaea'
+    cursor: '#FFFFFF'
     text: '#000000'
   normal:
     black: '#000000'
-    blue: '#3465A4'
-    cyan: '#06989A'
-    green: '#4E9A06'
-    magenta: '#75507B'
-    red: '#CC0000'
-    white: '#FFFFFD'
-    yellow: '#C4A000'
+    blue: '#000080'
+    cyan: '#008080'
+    green: '#008000'
+    magenta: '#800080'
+    red: '#800000'
+    white: '#C0C0C0'
+    yellow: '#808000'
   primary:
     background: '#000000'
-    foreground: '#FFFFFD'
+    foreground: '#FFFFFF'
   selection:
-    background: '#8F8F8F'
-    text: '#eaeaea'
+    background: '#3465A4'
+    text: '#000000'
+
 
 
 #ColorDomain: vi mode cursor colors
@@ -122,3 +179,4 @@ mouse_bindings:
   - { mouse: Right,                 action: PasteSelection }
   - { mouse: Right,  mods: Control, action: ExpandSelection }
   - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
+

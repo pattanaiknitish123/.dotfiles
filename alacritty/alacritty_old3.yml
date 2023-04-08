@@ -1,0 +1,124 @@
+env:
+  TERM: xterm-256color
+
+shell:
+  program: ubuntu
+
+# Windows Properties
+window:
+  dimensions:
+       columns: 110
+       lines: 35
+  paddings:
+       x: 0
+       y: 0
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: true
+
+# Scrolling  
+scrolling:
+  history: 10000
+  multiplier: 3
+  faux_multiplier: 3
+  auto_scroll: false
+
+# Save to clipboard
+selection:
+  save_to_clipboard: true
+
+# Font settings
+font:
+  normal:
+    family: "SF Mono"
+    style: Medium
+  bold:
+    family: "SF Mono"
+    style: Bold
+  italic:
+    family: "SF Mono"
+    style: "Light Italic"
+  bold_italic:
+    family: "SF Mono"
+    style: Bold Italic
+  size: 10.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+#  use_thin_strokes: true
+  AppleFontSmoothing: default
+
+# Cursor Style and Shape
+cursor:
+  style:
+    shape: Block
+    blinking: On
+  vi_mode_style: Block
+  blink_interval: 750
+  blink_timeout: 5
+  unfocused_hollow: true
+  thinkness: 0.15
+# ColorDomain:
+custom_cursor_colors: true
+
+draw_bold_text_with_bright_colors: true
+
+window_opacity: 1.0
+
+#ColorDomain: Color Schemes[Tango Dark: favorite]
+colors:
+  bright:
+    black: '#555753'
+    blue: '#729FCF'
+    cyan: '#34E2E2'
+    green: '#8AE234'
+    magenta: '#AD7FA8'
+    red: '#EF2929'
+    white: '#EEEEEC'
+    yellow: '#FCE94F'
+  cursor:
+    cursor: '#eaeaea'
+    text: '#000000'
+  normal:
+    black: '#000000'
+    blue: '#3465A4'
+    cyan: '#06989A'
+    green: '#4E9A06'
+    magenta: '#75507B'
+    red: '#CC0000'
+    white: '#FFFFFD'
+    yellow: '#C4A000'
+  primary:
+    background: '#000000'
+    foreground: '#FFFFFD'
+  selection:
+    background: '#8F8F8F'
+    text: '#eaeaea'
+
+
+#ColorDomain: vi mode cursor colors
+vi_mode_cursor:
+  text: CellBackground
+  cursor: CellForeground
+
+# Seach colors
+search:
+  matches:
+    foreground: '#000000'
+    background: '#FFFFFF'
+  focused_match:
+    foreground: '#FFFFFF'
+    background: '#000000'
+
+# KeyBindings
+key_bindings:
+  - { key: Return,   mods: Control|Shift, action: SpawnNewInstance }
+  - { key: Return,   mods: Alt,           action: ToggleFullscreen }
+  - { key: N,        mods: Control,       action: SpawnNewInstance }
+mouse_bindings:
+  - { mouse: Right,                 action: PasteSelection }
+  - { mouse: Right,  mods: Control, action: ExpandSelection }
+  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
