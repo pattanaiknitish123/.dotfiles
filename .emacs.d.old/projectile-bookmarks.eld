@@ -1,1 +1,0 @@
-("~/Projects/Code/test_repo/" "c:/Users/Patta/Downloads/zathura-0.4.9/" "c:/Users/Patta/arch-basic/" "~/Projects/Code/wallpapers/" "~/Projects/Code/fonts/" "c:/Users/Patta/.dotfiles/" "~/.emacs.d/elpa/vterm-20210804.405/")
